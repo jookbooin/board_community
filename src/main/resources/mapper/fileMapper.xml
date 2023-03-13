@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ch.dao.FileDao">
+
+    <!--    <insert id="insert" parameterType="fileDto">-->
+    <!--        INSERT INTO file (fname, bno)-->
+    <!--        VALUES (#{fname}, #{bno})-->
+    <!--    </insert>-->
+
+    <insert id="insertFile" parameterType="fileDto">
+        INSERT INTO file (bno, ofname, sfname, folder)
+        VALUES (#{bno}, #{ofname}, #{sfname}, #{folder})
+    </insert>
+
+    <select id="getName" parameterType="int" resultType="string">
+        SELECT fname
+        FROM file
+        WHERE bno = #{bno}
+        ORDER BY upload_date
+    </select>
+
+    <select id="getFiles" parameterType="int" resultType="FileDto">
+        SELECT *
+        FROM file
+        WHERE bno = #{bno}
+        ORDER BY upload_date
+    </select>
+
+    <delete id="deleteFile" parameterType="fileDto">
+        DELETE
+        FROM file
+        WHERE ofname = #{ofname}
+          and bno = #{bno}
+    </delete>
+
+    <delete id="deleteAll">
+        delete
+        from file
+        where bno = #{bno}
+    </delete>
+
+    <select id="FileCnt" parameterType="int" resultType="int">
+        select count(*)
+        from file
+        where bno = #{bno}
+    </select>
+
+
+    <update id="updateFile" parameterType="fileDto">
+        update file
+        set sfname = #{sfname}
+        where bno = #{bno}
+          and ofname = #{ofname}
+    </update>
+
+
+</mapper>
