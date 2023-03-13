@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
@@ -29,8 +28,6 @@ import java.util.UUID;
 @RequestMapping("/board")
 public class BoardController {
 
-
-    ServletContext servletContext;
     BoardService boardService;
     UserService userService;
 
@@ -93,7 +90,7 @@ public class BoardController {
 
             // service
             System.out.println();
-            int getBno = boardService.write(boardDto);
+            boardService.write(boardDto);
 
             System.out.println("<after write board>");
             System.out.println("boardDto = " + boardDto);

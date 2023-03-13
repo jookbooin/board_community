@@ -189,20 +189,19 @@
             </div>
             <br>
 
-            <%--    파일 업로드 form : mode = new 일 때   --%>
-            <c:if test="${mode eq 'new'}">
-                <div>
-                    <label>파일 선택</label>
-                    <input type="file" multiple="multiple" name="upfile">
-                        <%--                <input type="submit" value="전송">--%>
+            <div>
+                <%--    파일 업로드 form : mode = new 일 때   --%>
+                <c:if test="${mode eq 'new'}">
+                    <div id="file_input_div">
+                        <label>파일 선택</label>
+                        <input type="file" multiple="multiple" name="upfile">
+                            <%--                <input type="submit" value="전송">--%>
+                    </div>
                     <br>
                     <button type="button" id="board-wriBtn" class="btn btn-write-board"><i class="fa fa-pencil"></i> 등록
                     </button>
-                </div>
-            </c:if>
+                </c:if>
 
-
-            <div>
                 <c:if test="${mode ne 'new'}">
                     <button type="button" id="board-new-wriBtn" class="btn btn-write-board"><i class="fa fa-pencil"></i>
                         글쓰기
@@ -225,12 +224,17 @@
                         <td colspan="2">
                             <ul>
                                 <c:forEach var="fileDto" items="${boardDto.fileDtolist}">
-                                <li>${fileDto.ofname}<a href="#" class="download"
-                                                        folder="${fileDto.folder}" sfile="${fileDto.sfname}"
-                                                        ofile="${fileDto.ofname}">[다운로드]</a> <img
-                                    <%--src="${pageContext.request.contextPath}/${fileDto.folder}/${fileDto.sfname}"--%>
-                                        src="<c:url value='/${fileDto.folder}/${fileDto.sfname}'/>"
-                                        alt="/${fileDto.folder}/${fileDto.sfname}" height="200" width="400"/>
+                                <li>${fileDto.ofname}<a href="#" class="filedown"
+                                                        bno="${fileDto.bno}"
+                                                        folder="${fileDto.folder}"
+                                                        sfname="${fileDto.sfname}"
+                                                        ofname="${fileDto.ofname}">[다운로드]</a>
+                                    <div>
+                                        <img
+                                            <%--src="${pageContext.request.contextPath}/${fileDto.folder}/${fileDto.sfname}"--%>
+                                                src="<c:url value='/${fileDto.folder}/${fileDto.sfname}'/>"
+                                                alt="/${fileDto.folder}/${fileDto.sfname}" height="200" width="400"/>
+                                    </div>
                                     </c:forEach>
                             </ul>
                         </td>
@@ -420,7 +424,7 @@
             });
             $("#comment-rep-Form").css("display", "none");
             $("#comment-mod-Form").css("display", "none");
-            $("#comment-rep-Form").appendTo($("#comment-container"));
+            $("#comment-rep-Forme이 실제로 위치한 경로이다.").appendTo($("#comment-container"));
             $("#comment-mod-Form").appendTo($("#comment-container"));
         });
 
@@ -554,6 +558,15 @@
             } // 에러가 발생했을 때, 호출될 함수
         }); // $.ajax()
     }
+
+    //  파일 다운로드
+    $('.filedown').click(function () {
+        alert("원본파일이름 :  " + $(this).attr('ofname') + "     변환파일 이름 :  " + $(this).attr('sfname'));
+        <%--$(document).find('[name="sfolder"]').val($(this).attr('sfolder'));--%>
+        <%--$(document).find('[name="ofile"]').val($(this).attr('ofile'));--%>
+        <%--$(document).find('[name="sfile"]').val($(this).attr('sfile'));--%>
+        <%--$('#downform').attr('action', '${root}/article/download').attr('method', 'get').submit();--%>
+    });
 
     // html로 반환
     let toHtml = function (comments) {

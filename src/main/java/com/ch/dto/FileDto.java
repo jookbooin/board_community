@@ -3,6 +3,7 @@ package com.ch.dto;
 import java.util.Date;
 
 public class FileDto {
+    //  private String fno;
     private String Folder; // 파일 저장 위치
     private String ofname; // 원래 이름
     private String sfname; // 저장 이름
