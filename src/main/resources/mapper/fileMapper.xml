@@ -21,18 +21,23 @@
         ORDER BY upload_date
     </select>
 
-    <select id="getFiles" parameterType="int" resultType="FileDto">
+    <select id="getFilelist" parameterType="int" resultType="FileDto">
         SELECT *
         FROM file
         WHERE bno = #{bno}
         ORDER BY upload_date
     </select>
 
-    <delete id="deleteFile" parameterType="fileDto">
+    <select id="getFile" parameterType="int" resultType="FileDto">
+        select *
+        from file
+        where fno = #{fno}
+    </select>
+
+    <delete id="deleteFile" parameterType="int">
         DELETE
         FROM file
-        WHERE ofname = #{ofname}
-          and bno = #{bno}
+        WHERE fno = #{fno}
     </delete>
 
     <delete id="deleteAll">

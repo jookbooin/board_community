@@ -224,11 +224,8 @@
                         <td colspan="2">
                             <ul>
                                 <c:forEach var="fileDto" items="${boardDto.fileDtolist}">
-                                <li>${fileDto.ofname}<a href="#" class="filedown"
-                                                        bno="${fileDto.bno}"
-                                                        folder="${fileDto.folder}"
-                                                        sfname="${fileDto.sfname}"
-                                                        ofname="${fileDto.ofname}">[다운로드]</a>
+                                <li>${fileDto.ofname}<a href="<c:url value='/attach/download/${fileDto.fno}' />"
+                                                        target="_blank">[다운로드]</a>
                                     <div>
                                         <img
                                             <%--src="${pageContext.request.contextPath}/${fileDto.folder}/${fileDto.sfname}"--%>
