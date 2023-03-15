@@ -28,15 +28,24 @@ public class FileDaoImpl implements FileDao {
     }
 
     @Override
-    public int deleteFile(FileDto fileDto) throws Exception {
-
-        return session.delete(namespace + "deleteFile", fileDto);
+    public int deleteFile(Integer fno) throws Exception {
+        return session.delete(namespace + "deleteFile", fno);
     }
 
     @Override
-    public List<FileDto> getFiles(Integer bno) throws Exception {
+    public List<FileDto> getFilelist(Integer bno) throws Exception {
         return session.selectList(namespace + "getFiles", bno);
     }
+
+    @Override
+    public FileDto getFile(Integer fno) throws Exception {
+        return session.selectOne(namespace + "getFile", fno);
+    }
+
+//    @Override
+//    public FileDto get(Integer fno) throws Exception {
+//        return
+//    }
 
     @Override
     public int updateFile(FileDto fileDto) throws Exception {

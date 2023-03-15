@@ -31,6 +31,8 @@ public class BoardController {
     BoardService boardService;
     UserService userService;
 
+    String rootPath = "C:\\Users\\jookbooin\\IdeaProjects\\community\\target\\ch4-1.0.0-BUILD-SNAPSHOT\\";
+
     @Autowired
     public BoardController(BoardService boardService, UserService userService) {
         this.boardService = boardService;
@@ -40,8 +42,7 @@ public class BoardController {
     }
 
     @PostMapping("/write")
-    public String write(BoardDto boardDto, Model m, @RequestParam("upfile") MultipartFile[] files, HttpServletRequest request, HttpSession session, RedirectAttributes rattr) {
-//    public String write(BoardDto boardDto, Model m, HttpServletRequest request, HttpSession session, RedirectAttributes rattr) {
+    public String write(BoardDto boardDto, Model m, @RequestParam("upfile") MultipartFile[] files, HttpSession session, RedirectAttributes rattr) {
         String id = (String) session.getAttribute("id");
         boardDto.setId(id); // board : id
 
@@ -49,10 +50,8 @@ public class BoardController {
             UserDto userDto = userService.selectUser(id);
             String nickname = userDto.getNickname();
             boardDto.setNickname(nickname);  // board : nickname
+
             // 파일
-//            resources/upload
-            String rootPath = request.getSession().getServletContext().getRealPath("/");
-            System.out.println("rootPath = " + rootPath);
             String uploadPath = "resources" + File.separator + "upload";
 
             String realPath = rootPath + uploadPath;
@@ -76,7 +75,6 @@ public class BoardController {
                     String saveFileName = UUID.randomUUID().toString() + originalFileName.substring(originalFileName.lastIndexOf('.'));
                     fileDto.setOfname(originalFileName);
                     fileDto.setSfname(saveFileName);
-                    
                     fileDto.setFolder(uploadFolder);
 
                     System.out.println(mfile.getOriginalFilename() + "   " + saveFileName);

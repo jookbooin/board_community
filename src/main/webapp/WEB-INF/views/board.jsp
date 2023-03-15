@@ -190,6 +190,7 @@
             <br>
 
             <div>
+
                 <%--    파일 업로드 form : mode = new 일 때   --%>
                 <c:if test="${mode eq 'new'}">
                     <div id="file_input_div">
@@ -197,6 +198,14 @@
                         <input type="file" multiple="multiple" name="upfile">
                             <%--                <input type="submit" value="전송">--%>
                     </div>
+                    <%--                    <form enctype="multipart/form-data" method="post">--%>
+
+                    <%--                        <input id="desc" type="text"/>--%>
+
+                    <%--                        <input id="image" type="file"/>--%>
+
+                    <%--                    </form>--%>
+
                     <br>
                     <button type="button" id="board-wriBtn" class="btn btn-write-board"><i class="fa fa-pencil"></i> 등록
                     </button>
@@ -224,11 +233,8 @@
                         <td colspan="2">
                             <ul>
                                 <c:forEach var="fileDto" items="${boardDto.fileDtolist}">
-                                <li>${fileDto.ofname}<a href="#" class="filedown"
-                                                        bno="${fileDto.bno}"
-                                                        folder="${fileDto.folder}"
-                                                        sfname="${fileDto.sfname}"
-                                                        ofname="${fileDto.ofname}">[다운로드]</a>
+                                <li>${fileDto.ofname}<a href="<c:url value='/attach/download/${fileDto.fno}' />"
+                                                        target="_blank">[다운로드]</a>
                                     <div>
                                         <img
                                             <%--src="${pageContext.request.contextPath}/${fileDto.folder}/${fileDto.sfname}"--%>
