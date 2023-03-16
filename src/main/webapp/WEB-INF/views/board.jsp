@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page session="true" %>
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
@@ -193,23 +194,33 @@
 
                 <%--    파일 업로드 form : mode = new 일 때   --%>
                 <c:if test="${mode eq 'new'}">
-                    <div id="file_input_div">
-                        <label>파일 선택</label>
-                        <input type="file" multiple="multiple" name="upfile">
-                            <%--                <input type="submit" value="전송">--%>
-                    </div>
-                    <%--                    <form enctype="multipart/form-data" method="post">--%>
+                    <%--                    <div id="file_input_div">--%>
+                    <%--                        <label>파일 선택</label>--%>
+                    <%--                        <input type="file" multiple="multiple" name="upfile">--%>
+                    <%--                            &lt;%&ndash;                <input type="submit" value="전송">&ndash;%&gt;--%>
+                    <%--                    </div>--%>
 
-                    <%--                        <input id="desc" type="text"/>--%>
+                    <form:form action="<c:url value='/board/write'/>" method="post" modelAttribute="boardDto"
+                               enctype="multipart/form-data">
+                        <tr>
+                            <th>첨부파일
+                                <button type="button" id="id_btn_new_file">추가</button>
+                            </th>
 
-                    <%--                        <input id="image" type="file"/>--%>
-
-                    <%--                    </form>--%>
+                            <div class="file_area"> <%--테이블 열 --%>
+                                <div id="file_check_div" class="form-inline">
+                                    <input type="file" name="boFiles" class="form-control">
+                                    <button type="button" class="btn_file_delete">삭제</button>
+                                </div>
+                            </div>
+                        </tr>
+                    </form:form>
 
                     <br>
                     <button type="button" id="board-wriBtn" class="btn btn-write-board"><i class="fa fa-pencil"></i> 등록
                     </button>
                 </c:if>
+
 
                 <c:if test="${mode ne 'new'}">
                     <button type="button" id="board-new-wriBtn" class="btn btn-write-board"><i class="fa fa-pencil"></i>
@@ -229,8 +240,8 @@
             <div>
                 <%--     업로드 확인 form :  mod != new--%>
                 <c:if test="${mode ne 'new'}">
-                    <tr>
-                        <td colspan="2">
+                    <tr>  <%-- 행--%>
+                        <td colspan="2"><%--열--%>
                             <ul>
                                 <c:forEach var="fileDto" items="${boardDto.fileDtolist}">
                                 <li>${fileDto.ofname}<a href="<c:url value='/attach/download/${fileDto.fno}' />"
@@ -305,9 +316,25 @@
     <%--  board 랑 comment 묶는 div   --%>
 </article>
 
+<%--파일--%>
+<script type="text/javascript">
+    // $(document).ready(function () {
+    $('#id_btn_new_file').click(function () {
+        let html = '<div id="file_check_div" class="form-inline"><input type="file" name="boFiles" class="form-control"><button type="button" class="btn_file_delete">삭제</button></div>';
 
+        $('.file_area').append(html);
+        alert("click");
+    });
+
+    $('.file_area').on('click', '.btn_file_delete', function () {
+        alert("delete");
+        $(this).closest('div').remove();
+    });
+    // });
+</script>
+
+<%--게시글 --%>
 <script>
-
     $(document).ready(function () {
 
         let formCheck = function () {
@@ -368,6 +395,15 @@
             location.href = "<c:url value='/board/list${searchCondition.queryString}'/>";
         });
 
+
+    }); // document - function
+
+</script>
+
+
+<%--댓글--%>
+<script>
+    $(document).ready(function () {
 
         // 댓글
         let bno = ${mode ne 'new'} ? "${boardDto.bno}" : "0";
@@ -430,7 +466,7 @@
             });
             $("#comment-rep-Form").css("display", "none");
             $("#comment-mod-Form").css("display", "none");
-            $("#comment-rep-Forme이 실제로 위치한 경로이다.").appendTo($("#comment-container"));
+            $("#comment-rep-Forme").appendTo($("#comment-container"));
             $("#comment-mod-Form").appendTo($("#comment-container"));
         });
 
@@ -546,9 +582,7 @@
             $("#comment-rep-Form").appendTo($("#comment-container"));
             $("#comment-mod-Form").appendTo($("#comment-container"));
         });
-
-
-    }); // document - function
+    });
 
     // 리스트 가져오기
     let showList = function (bno) {
@@ -565,14 +599,6 @@
         }); // $.ajax()
     }
 
-    //  파일 다운로드
-    $('.filedown').click(function () {
-        alert("원본파일이름 :  " + $(this).attr('ofname') + "     변환파일 이름 :  " + $(this).attr('sfname'));
-        <%--$(document).find('[name="sfolder"]').val($(this).attr('sfolder'));--%>
-        <%--$(document).find('[name="ofile"]').val($(this).attr('ofile'));--%>
-        <%--$(document).find('[name="sfile"]').val($(this).attr('sfile'));--%>
-        <%--$('#downform').attr('action', '${root}/article/download').attr('method', 'get').submit();--%>
-    });
 
     // html로 반환
     let toHtml = function (comments) {
@@ -595,8 +621,7 @@
 
         return tmp + "</ul>"
     }
-
-
 </script>
+
 </body>
 </html>

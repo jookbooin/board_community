@@ -8,9 +8,11 @@ import com.ch.dto.FileDto;
 import com.ch.dto.UserDto;
 import com.ch.service.BoardService;
 import com.ch.service.UserService;
+import com.ch.util.FileUploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -19,10 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 @Controller
 @RequestMapping("/board")
@@ -30,19 +30,18 @@ public class BoardController {
 
     BoardService boardService;
     UserService userService;
-
-    String rootPath = "C:\\Users\\jookbooin\\IdeaProjects\\community\\target\\ch4-1.0.0-BUILD-SNAPSHOT\\";
+    FileUploadUtils fileUploadUtils;  // 파일 업로드
 
     @Autowired
-    public BoardController(BoardService boardService, UserService userService) {
+    public BoardController(BoardService boardService, UserService userService, FileUploadUtils fileUploadUtils) {
         this.boardService = boardService;
         this.userService = userService;
-
+        this.fileUploadUtils = fileUploadUtils;
 
     }
 
     @PostMapping("/write")
-    public String write(BoardDto boardDto, Model m, @RequestParam("upfile") MultipartFile[] files, HttpSession session, RedirectAttributes rattr) {
+    public String write(BoardDto boardDto, BindingResult error, Model m, @RequestParam("boFiles") MultipartFile[] files, HttpSession session, RedirectAttributes rattr) {
         String id = (String) session.getAttribute("id");
         boardDto.setId(id); // board : id
 
@@ -51,44 +50,19 @@ public class BoardController {
             String nickname = userDto.getNickname();
             boardDto.setNickname(nickname);  // board : nickname
 
-            // 파일
+            // 파일 경로
             String uploadPath = "resources" + File.separator + "upload";
-
-            String realPath = rootPath + uploadPath;
-            System.out.println("realPath = " + realPath);
             String today = new SimpleDateFormat("yyMMdd").format(new Date()); //C:\Users\jookbooin\IdeaProjects\board_project\target\ch4-1.0.0-BUILD-SNAPSHOT\resources/upload\230308
-            String saveFolder = realPath + File.separator + today;
-            System.out.println("saveFolder = " + saveFolder);
-            String uploadFolder = uploadPath + File.separator + today;
-            System.out.println("uploadFolder = " + uploadFolder);
+            String uploadFolder = uploadPath + File.separator + today;  // resources/upload/today
 
-
-            File folder = new File(saveFolder);
-            if (!folder.exists())
-                folder.mkdirs();
-
-            List<FileDto> fileDtolist = new ArrayList<FileDto>();
-            for (MultipartFile mfile : files) {
-                FileDto fileDto = new FileDto();
-                String originalFileName = mfile.getOriginalFilename();
-                if (!originalFileName.isEmpty()) {
-                    String saveFileName = UUID.randomUUID().toString() + originalFileName.substring(originalFileName.lastIndexOf('.'));
-                    fileDto.setOfname(originalFileName);
-                    fileDto.setSfname(saveFileName);
-                    fileDto.setFolder(uploadFolder);
-
-                    System.out.println(mfile.getOriginalFilename() + "   " + saveFileName);
-                    mfile.transferTo(new File(folder, saveFileName));
-                    fileDtolist.add(fileDto);
-                }
+            if (files != null) {
+                List<FileDto> fileDtolist = fileUploadUtils.getFileListByMurltiparts(files, uploadFolder);
+                boardDto.setFileDtolist(fileDtolist);
             }
-            System.out.println("fileDtolist.size : " + fileDtolist.size());
-
-            boardDto.setFileDtolist(fileDtolist); // fileDtolist -> boardDto 로
 
             // service
             System.out.println();
-            boardService.write(boardDto);
+            boardService.write(boardDto);  // 여기서 파일 업로드
 
             System.out.println("<after write board>");
             System.out.println("boardDto = " + boardDto);
@@ -109,6 +83,7 @@ public class BoardController {
     public String write(Model m) {
 
         m.addAttribute("mode", "new");
+
         System.out.println();
         System.out.println("boardlist --> board:GET(/write)");
         System.out.println("mode = new");
