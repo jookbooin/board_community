@@ -16,7 +16,7 @@ public class BoardDto {
 
     private int file_cnt;
     private List<FileDto> fileDtolist;
-
+    private int[] delFno; // 삭제할 파일 번호..?
     private Date reg_date;
 
     public BoardDto() {
@@ -122,6 +122,14 @@ public class BoardDto {
         this.file_cnt = file_cnt;
     }
 
+    public int[] getDelFno() {
+        return delFno;
+    }
+
+    public void setDelFno(int[] delFno) {
+        this.delFno = delFno;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -137,7 +145,7 @@ public class BoardDto {
 
     @Override
     public String toString() {
-        return "BoardDto={" +
+        return "BoardDto{" +
                 "bno=" + bno +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
@@ -150,5 +158,4 @@ public class BoardDto {
                 ", reg_date=" + reg_date +
                 '}';
     }
-
 }
