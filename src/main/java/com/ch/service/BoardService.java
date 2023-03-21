@@ -16,7 +16,7 @@ public interface BoardService {
 
     int remove(Integer bno, String writer) throws Exception;
 
-    int write(BoardDto boardDto) throws Exception;
+    void write(BoardDto boardDto) throws Exception;
 
 
     List<BoardDto> getList() throws Exception;

@@ -1,5 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jstl/core_rt" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ page session="true" %>
 <c:set var="loginId" value="${sessionScope.id}"/>
 <c:set var="loginOutLink" value="${loginId=='' ? '/login/login' : '/login/logout'}"/>
@@ -171,7 +172,7 @@
 
     <%--    게시판--%>
     <section class="container" id="board-container">
-        <h2 class="writing-header">게시판 ${mode=="new" ? "글쓰기" : "읽기"}</h2>
+        <h2 class="writing-header">게시판 ${mode=="new" ? "쓰기" :mode =="modify"?"수정": "조회"}</h2>
 
         <form id="board-Form" class="frm" action="" method="post" enctype="multipart/form-data">
             <input type="hidden" name="bno" value="${boardDto.bno}">
@@ -189,20 +190,50 @@
             </div>
             <br>
 
-            <%--    파일 업로드 form : mode = new 일 때   --%>
-            <c:if test="${mode eq 'new'}">
-                <div>
-                    <label>파일 선택</label>
-                    <input type="file" multiple="multiple" name="upfile">
-                        <%--                <input type="submit" value="전송">--%>
+            <div>
+                <%--    파일 업로드 form : mode = new 일 때   --%>
+                <c:if test="${mode eq 'new'}">
+
+                    <form:form action="<c:url value='/board/write'/>" method="post" modelAttribute="boardDto"
+                               enctype="multipart/form-data">
+
+                        <div id="file_area_div">
+                            <div id="file_insert_btn">첨부파일
+                                <button type="button" class="id_btn_new_file">추가</button>
+                            </div>
+                            <div class="file_area"/>
+                                <%--파일 붙이는 곳--%>
+                        </div>
+                    </form:form>
                     <br>
                     <button type="button" id="board-wriBtn" class="btn btn-write-board"><i class="fa fa-pencil"></i> 등록
                     </button>
-                </div>
-            </c:if>
+                </c:if>
 
+                <%--    파일 업로드 form : mode = modify 일 때   --%>
+                <c:if test="${mode eq 'modify'}">
+                    <form:form action="<c:url value='/board/modify'/>" method="post" modelAttribute="boardDto"
+                               enctype="multipart/form-data">
+                        <div id="file_area_div">
+                            <div class="file_insert_btn">첨부파일
+                                <button type="button" class="id_btn_new_file">추가</button>
+                            </div>
+                            <div class="file_area">
+                                <c:forEach var="fileDto" items="${boardDto.fileDtolist}">
+                                    <div class="exist_file_div">
+                                            <%--<span class="glyphicon glyphicon-trash" aria-hidden="true"></span>--%>
+                                            ${fileDto.ofname}
+                                        <button class="exist_file_delete" data-fno="${fileDto.fno}"><i
+                                                class="fa fa-trash"></i>삭제
+                                        </button>
+                                    </div>
+                                </c:forEach>
+                            </div>
+                        </div>
 
-            <div>
+                    </form:form>
+                </c:if>
+
                 <c:if test="${mode ne 'new'}">
                     <button type="button" id="board-new-wriBtn" class="btn btn-write-board"><i class="fa fa-pencil"></i>
                         글쓰기
@@ -220,17 +251,17 @@
             <br>
             <div>
                 <%--     업로드 확인 form :  mod != new--%>
-                <c:if test="${mode ne 'new'}">
-                    <tr>
-                        <td colspan="2">
+                <c:if test="${mode ne 'new' and mode ne 'modify'}">
+                    <tr><%-- 행--%>
+                        <td colspan="2"><%--열--%>
                             <ul>
                                 <c:forEach var="fileDto" items="${boardDto.fileDtolist}">
-                                <li>${fileDto.ofname}<a href="#" class="download"
-                                                        folder="${fileDto.folder}" sfile="${fileDto.sfname}"
-                                                        ofile="${fileDto.ofname}">[다운로드]</a> <img
-                                    <%--src="${pageContext.request.contextPath}/${fileDto.folder}/${fileDto.sfname}"--%>
-                                        src="<c:url value='/${fileDto.folder}/${fileDto.sfname}'/>"
-                                        alt="/${fileDto.folder}/${fileDto.sfname}" height="200" width="400"/>
+                                <li>${fileDto.ofname}<a href="<c:url value='/attach/download/${fileDto.fno}' />"
+                                                        target="_blank">[다운로드]</a>
+                                    <div>
+                                        <img src="<c:url value='/${fileDto.folder}/${fileDto.sfname}'/>"
+                                             alt="/${fileDto.folder}/${fileDto.sfname}" height="200" width="400"/>
+                                    </div>
                                     </c:forEach>
                             </ul>
                         </td>
@@ -295,9 +326,29 @@
     <%--  board 랑 comment 묶는 div   --%>
 </article>
 
-
+<%--파일--%>
 <script>
 
+    $('.id_btn_new_file').click(function () {
+        let html = '<div class="file_insert_div"><input type="file" name="boFiles" class="file_input"><button type="button" class="file_delete">삭제</button></div>';
+        $('.file_area').append(html);
+    });
+
+    $('.file_area').on('click', '.file_delete', function () {
+        $(this).closest('div').remove();
+    });
+
+    $('.exist_file_delete').click(function () {
+        $btn = $(this) // jquery 변수선언 방법인듯 ?
+        $btn.closest('div').html( // 가까운 div의 형태를 이렇게 바꾼다.
+            '<input type="hidden" name="delFno" value="' + $btn.attr("data-fno") + '" />'
+        );
+    });
+
+</script>
+
+<%--게시글 --%>
+<script>
     $(document).ready(function () {
 
         let formCheck = function () {
@@ -315,6 +366,7 @@
             return true;
         }
 
+
         $("#board-new-wriBtn").on("click", function () {
             location.href = "<c:url value='/board/write'/>";
         });
@@ -327,22 +379,36 @@
                 form.submit();
         });
 
-        $("#board-modBtn").on("click", function () {
-            let form = $("#board-Form");
+
+        //  수정 모드 일 때
+        if (${mode eq 'modify'}) {
             let isReadonly = $("input[name=title]").attr('readonly');
             // 1. 읽기 상태이면, 수정 상태로 변경
             if (isReadonly == 'readonly') {
-                $(".writing-header").html("게시판 수정");
+                // $(".writing-header").html("게시판 수정");
                 $("input[name=title]").attr('readonly', false);
+
                 $("textarea").attr('readonly', false);
-                $("#board-modBtn").html("<i class='fa fa-pencil'></i> 수정");
-                return;
+
+                $("#board-modBtn").html("<i class='fa fa-pencil'></i> 수정완료");
             }
-            // 2. 수정 상태이면, 수정된 내용을 서버로 전송
-            form.attr("action", "<c:url value='/board/modify${searchCondition.queryString}'/>");
-            form.attr("method", "post");
-            if (formCheck())
-                form.submit();
+        }
+
+        $("#board-modBtn").on("click", function () {
+            let form = $("#board-Form");
+
+            if (${mode ne ''}) {
+                form.attr("action", "<c:url value='/board/remodify${searchCondition.queryString}'/>").submit();
+            }
+
+            if (${mode eq 'modify'}) {
+                // 2. 수정 상태이면, 수정된 내용을 서버로 전송
+                alert("click")
+                form.attr("action", "<c:url value='/board/modify${searchCondition.queryString}'/>");
+                form.attr("method", "post");
+                if (formCheck())
+                    form.submit();
+            }
         });
 
         $("#board-delBtn").on("click", function () {
@@ -358,6 +424,15 @@
             location.href = "<c:url value='/board/list${searchCondition.queryString}'/>";
         });
 
+
+    }); // document - function
+
+</script>
+
+
+<%--댓글--%>
+<script>
+    $(document).ready(function () {
 
         // 댓글
         let bno = ${mode ne 'new'} ? "${boardDto.bno}" : "0";
@@ -384,7 +459,7 @@
                 headers: {"content-type": "application/json"}, // 요청 헤더
                 data: JSON.stringify({bno: bno, comment: comment}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
                 success: function (result) {
-                    alert("POST:success");
+                    alert("댓글 등록되었습니다.");
                     showList(bno);
                 },
                 error: function () {
@@ -411,7 +486,7 @@
                 url: "<c:url value='/comments'/>/" + cno + "?bno=" + bno,
                 success: function (result) {
                     $("#commentList").html(result);
-                    alert("Comment:DEL_OK");
+                    alert("삭제되었습니다.");
                     showList(bno);
                 },
                 error: function () {
@@ -420,7 +495,7 @@
             });
             $("#comment-rep-Form").css("display", "none");
             $("#comment-mod-Form").css("display", "none");
-            $("#comment-rep-Form").appendTo($("#comment-container"));
+            $("#comment-rep-Forme").appendTo($("#comment-container"));
             $("#comment-mod-Form").appendTo($("#comment-container"));
         });
 
@@ -436,7 +511,6 @@
             $("#recomment-wriBtn").attr("data-bno", bno);
             // 보이게 한다
             $("#comment-rep-Form").css("display", "block");
-
         });
 
         // 답글 버튼 내부
@@ -464,7 +538,7 @@
                 headers: {"content-type": "application/json"}, // 요청 헤더
                 data: JSON.stringify({pcno: pcno, bno: bno, comment: comment}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
                 success: function (result) {
-                    alert("POST-pcno:success");
+                    alert("대댓글 등록되었습니다");
                     showList(bno);
                 },
                 error: function () {
@@ -479,7 +553,6 @@
 
         // 수정 버튼
         $("#commentList").on("click", ".comment-modBtn", function () {
-
             // comment-rep-Form 초기화
             $("#comment-rep-Form").css("display", "none");
             // 숨긴 수정 위치를 가져온다 .
@@ -524,7 +597,7 @@
                 headers: {"content-type": "application/json"}, // 요청 헤더
                 data: JSON.stringify({cno: cno, comment: comment}),  // 서버로 전송할 데이터. stringify()로 직렬화 필요.
                 success: function (result) {
-                    alert("Patch:success");
+                    alert("수정되었습니다.");
                     showList(bno);
                 },
                 error: function () {
@@ -536,9 +609,7 @@
             $("#comment-rep-Form").appendTo($("#comment-container"));
             $("#comment-mod-Form").appendTo($("#comment-container"));
         });
-
-
-    }); // document - function
+    });
 
     // 리스트 가져오기
     let showList = function (bno) {
@@ -554,6 +625,7 @@
             } // 에러가 발생했을 때, 호출될 함수
         }); // $.ajax()
     }
+
 
     // html로 반환
     let toHtml = function (comments) {
@@ -576,8 +648,7 @@
 
         return tmp + "</ul>"
     }
-
-
 </script>
+
 </body>
 </html>

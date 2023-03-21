@@ -22,14 +22,24 @@ public class FileServiceImpl implements FileService {
     // 첨부파일 목록가져오기 -> String 일까 FileDto일까??
     @Override
     public List<FileDto> getBoardFiles(Integer bno) throws Exception {
-        return fileDao.getFiles(bno);
+        return fileDao.getFilelist(bno);
     }
 
     @Override
+    public FileDto getFile(Integer fno) throws Exception {
+        FileDto fileDto = fileDao.getFile(fno);
+        if (fileDto == null) {
+            throw new Exception("첨부파일 [" + fno + "]에 대한 조회 실패");
+        }
+        return fileDto;
+    }
+
+
+    @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteFile(FileDto fileDto) throws Exception {
-        boardDao.updateFileCnt(fileDto.getBno(), -1);
-        int rowCnt = fileDao.deleteFile(fileDto);
+    public int deleteFile(Integer fno, Integer bno) throws Exception {
+        boardDao.updateFileCnt(bno, -1);
+        int rowCnt = fileDao.deleteFile(fno);
         return rowCnt;
     }
 
@@ -45,6 +55,7 @@ public class FileServiceImpl implements FileService {
 
         int rowCnt = fileDao.insertFile(fileDto);
         System.out.println("(insertFile) fileDto = " + fileDto);
+
         boardDao.updateFileCnt(fileDto.getBno(), 1);
         return rowCnt;
 

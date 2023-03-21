@@ -13,12 +13,14 @@ public interface FileDao {
     public int insertFile(FileDto fileDto) throws Exception;
 
     // 게시글의 첨부 파일 삭제
-    public int deleteFile(FileDto fileDto) throws Exception;
+    public int deleteFile(Integer fno) throws Exception;
 
     public int updateFile(FileDto fileDto) throws Exception;
 
     // 게시글 첨부파일 조회
-    List<FileDto> getFiles(Integer bno) throws Exception;
+    List<FileDto> getFilelist(Integer bno) throws Exception;
+
+    FileDto getFile(Integer fno) throws Exception;
 
     public int FileCnt(Integer bno) throws Exception;
 }

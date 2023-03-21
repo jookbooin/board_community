@@ -22,6 +22,8 @@
 		</dependency>
 
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+
+		<!--경로에 파일저장 -->
 		<dependency>
 			<groupId>commons-io</groupId>
 			<artifactId>commons-io</artifactId>
