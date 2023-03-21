@@ -34,7 +34,7 @@ public class FileDaoImpl implements FileDao {
 
     @Override
     public List<FileDto> getFilelist(Integer bno) throws Exception {
-        return session.selectList(namespace + "getFiles", bno);
+        return session.selectList(namespace + "getFilelist", bno);
     }
 
     @Override

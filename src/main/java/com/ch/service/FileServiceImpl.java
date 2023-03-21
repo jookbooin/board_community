@@ -37,9 +37,9 @@ public class FileServiceImpl implements FileService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteFile(FileDto fileDto) throws Exception {
-        boardDao.updateFileCnt(fileDto.getBno(), -1);
-        int rowCnt = fileDao.deleteFile(fileDto.getFno());
+    public int deleteFile(Integer fno, Integer bno) throws Exception {
+        boardDao.updateFileCnt(bno, -1);
+        int rowCnt = fileDao.deleteFile(fno);
         return rowCnt;
     }
 
@@ -55,6 +55,7 @@ public class FileServiceImpl implements FileService {
 
         int rowCnt = fileDao.insertFile(fileDto);
         System.out.println("(insertFile) fileDto = " + fileDto);
+
         boardDao.updateFileCnt(fileDto.getBno(), 1);
         return rowCnt;
 

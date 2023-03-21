@@ -19,8 +19,6 @@ comment:<input type="text" name="comment"><br>
     <button id="wrtRepBtn" type="button">등록</button>
 </div>
 
-<script type="text/javascript" src="<c:url value='/js/alert.js'/>"/>
-<%--<script type="text/javascript" src="/resources/js/comment.js"/>--%>
 <script>
     // let bno = 274;
     //

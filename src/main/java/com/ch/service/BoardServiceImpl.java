@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -57,15 +58,17 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-//    @Transactional(rollbackFor = Exception.class)
-    public int write(BoardDto boardDto) throws Exception {
+    @Transactional(rollbackFor = Exception.class)
+    public void write(BoardDto boardDto) throws Exception {
         // 게시글 입력처리와 첨부파일 입력처리가 동시에 일어날 수 있음.
-        int bno = boardDao.insert(boardDto);
+        boardDao.insert(boardDto);
+        int bno = boardDto.getBno();
 
         System.out.println("<BoardService(write)>");
         System.out.println("bno = " + bno);
+
+// 형식: flist : [FileDto{fno='null', Folder='resources\\upload\230316', ofname='head ccc.txt.jpg', sfname='56a9d38b-e325-4531-b5b4-ba1c102ed948.jpg', bno=136, upload_date=null}
         List<FileDto> flist = boardDto.getFileDtolist();
-        // 입력 받을때 flist :  [FileDto{Folder='230308', ofname='조합.jpg', sfname='15e9eebe-8619-4d86-ba87-13325458ba7e.jpg', bno=null}....] 이런식
         System.out.println("flist.size : " + flist.size());
 
         if (flist.size() > 0) {
@@ -77,8 +80,6 @@ public class BoardServiceImpl implements BoardService {
         }
         System.out.println("flist : " + flist);
         System.out.println();
-
-        return bno;
     }
 
     @Override
@@ -99,7 +100,31 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public int modify(BoardDto boardDto) throws Exception {
+        System.out.println();
+        System.out.println("boardDto = " + boardDto);
+
+        int delFno[] = boardDto.getDelFno();
+        System.out.println("delFno : " + Arrays.toString(delFno)); // 자동으로 불러옴
+
+        // board 내부에서 삭제 된다면 DB에서 지운다
+        if (delFno != null && delFno.length > 0) {
+            for (int fno : delFno) {
+                fileService.deleteFile(fno, boardDto.getBno());
+                System.out.println("파일을 삭제했습니다.");
+            }
+        }
+
+        // JSP 에서 추가된 파일배열
+        for (FileDto f : boardDto.getFileDtolist()) {
+            f.setBno(boardDto.getBno());
+            fileService.insertFile(f);
+            System.out.println("파일을 넣었습니다.");
+        }
+
+        boardDto.setFileDtolist(fileService.getBoardFiles(boardDto.getBno()));
+
         return boardDao.update(boardDto);
     }
 

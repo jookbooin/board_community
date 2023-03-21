@@ -10,7 +10,7 @@ public interface FileService {
 
     FileDto getFile(Integer fno) throws Exception;
 
-    public int deleteFile(FileDto fileDto) throws Exception;
+    public int deleteFile(Integer fno, Integer bno) throws Exception;
 
     public int deleteAllFile(Integer bno) throws Exception;
 

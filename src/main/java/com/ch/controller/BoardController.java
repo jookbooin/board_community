@@ -7,6 +7,7 @@ import com.ch.dto.BoardDto;
 import com.ch.dto.FileDto;
 import com.ch.dto.UserDto;
 import com.ch.service.BoardService;
+import com.ch.service.FileService;
 import com.ch.service.UserService;
 import com.ch.util.FileUploadUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,36 +31,30 @@ public class BoardController {
 
     BoardService boardService;
     UserService userService;
+    FileService fileService;
     FileUploadUtils fileUploadUtils;  // 파일 업로드
 
     @Autowired
-    public BoardController(BoardService boardService, UserService userService, FileUploadUtils fileUploadUtils) {
+    public BoardController(BoardService boardService, UserService userService, FileUploadUtils fileUploadUtils, FileService fileService) {
         this.boardService = boardService;
         this.userService = userService;
         this.fileUploadUtils = fileUploadUtils;
+        this.fileService = fileService;
 
     }
 
     @PostMapping("/write")
-    public String write(BoardDto boardDto, BindingResult error, Model m, @RequestParam("boFiles") MultipartFile[] files, HttpSession session, RedirectAttributes rattr) {
-        String id = (String) session.getAttribute("id");
-        boardDto.setId(id); // board : id
-
+    public String write(BoardDto boardDto, BindingResult error, Model m,
+                        @RequestParam("boFiles") MultipartFile[] files, HttpSession session, RedirectAttributes rattr) throws Exception {
+        setIdName(boardDto, session);
         try {
-            UserDto userDto = userService.selectUser(id);
-            String nickname = userDto.getNickname();
-            boardDto.setNickname(nickname);  // board : nickname
-
-            // 파일 경로
-            String uploadPath = "resources" + File.separator + "upload";
-            String today = new SimpleDateFormat("yyMMdd").format(new Date()); //C:\Users\jookbooin\IdeaProjects\board_project\target\ch4-1.0.0-BUILD-SNAPSHOT\resources/upload\230308
-            String uploadFolder = uploadPath + File.separator + today;  // resources/upload/today
 
             if (files != null) {
-                List<FileDto> fileDtolist = fileUploadUtils.getFileListByMurltiparts(files, uploadFolder);
+                List<FileDto> fileDtolist = fileUploadUtils.getFileListByMurltiparts(files, uploadFolder());
                 boardDto.setFileDtolist(fileDtolist);
             }
 
+            
             // service
             System.out.println();
             boardService.write(boardDto);  // 여기서 파일 업로드
@@ -79,6 +74,7 @@ public class BoardController {
         }
     }
 
+
     @GetMapping("/write")   // 글쓰기 버튼 --> 게시판 글쓰기
     public String write(Model m) {
 
@@ -90,18 +86,41 @@ public class BoardController {
         return "board";
     }
 
+    @PostMapping("/remodify")
+    public String modify(BoardDto boardDto, Model m, HttpSession session) throws Exception {
+        setIdName(boardDto, session);
+        boardDto.setFileDtolist(fileService.getBoardFiles(boardDto.getBno()));
+
+        System.out.println("board:POST(/remodify) --> board");
+        m.addAttribute("mode", "modify");
+        m.addAttribute(boardDto);
+        System.out.println("boardDto = " + boardDto);
+
+        return "board";
+    }
+
 
     @PostMapping("/modify")
-    public String modify(BoardDto boardDto, Model m, HttpSession session, RedirectAttributes rattr) {
+    public String modify(BoardDto boardDto, BindingResult error, Model m,
+                         @RequestParam("boFiles") MultipartFile[] files,
+                         HttpSession session, RedirectAttributes rattr) throws Exception {
+
+        if (error.hasErrors()) {
+            return "forward:/board/remodify";
+        }
+
+
         System.out.println();
         System.out.println("board:POST(/modify) --> board");
 
-        // 띠용
-        String id = (String) session.getAttribute("id");
-        boardDto.setId(id);
-
-        System.out.println(boardDto);
         try {
+            setIdName(boardDto, session);
+            System.out.println("boardDto = " + boardDto);
+
+            if (files != null) {
+                List<FileDto> fileDtolist = fileUploadUtils.getFileListByMurltiparts(files, uploadFolder());
+                boardDto.setFileDtolist(fileDtolist);
+            }
 
             int rowCnt = boardService.modify(boardDto);
 
@@ -117,7 +136,6 @@ public class BoardController {
             rattr.addFlashAttribute("msg", "MOD_ERR");
             m.addAttribute(boardDto);
             return "board";
-
         }
     }
 
@@ -206,5 +224,26 @@ public class BoardController {
 
         // 2. 세션에 id가 있는지 확인, 있으면 true를 반환
         return session.getAttribute("id") != null;
+    }
+
+    private void setIdName(BoardDto boardDto, HttpSession session) throws Exception {
+        String id = (String) session.getAttribute("id");
+        boardDto.setId(id); // board : id
+
+        try {
+            UserDto userDto = userService.selectUser(id);
+            String nickname = userDto.getNickname();
+            boardDto.setNickname(nickname);
+
+        } catch (Exception e) {
+            throw new Exception(e);
+        }
+    }
+
+    public String uploadFolder() {
+        String uploadPath = "resources" + File.separator + "upload";
+        String today = new SimpleDateFormat("yyMMdd").format(new Date()); //C:\Users\jookbooin\IdeaProjects\board_project\target\ch4-1.0.0-BUILD-SNAPSHOT\resources/upload\230308
+        String uploadFolder = uploadPath + File.separator + today;  // resources/upload/today
+        return uploadFolder;
     }
 }

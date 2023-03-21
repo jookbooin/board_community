@@ -45,12 +45,11 @@ public class BoardDaoImpl implements BoardDao {
 
     @Override
     public int insert(BoardDto boardDto) throws Exception {
-        session.insert(namespace + "insert", boardDto);
+        return session.insert(namespace + "insert", boardDto);
         // boardMapper에 selectKey를 이용해서 boardDto 의 bno에 Auto-increment 된 값을 바로 넣었다.
         // 원래 boardDto bno = null이고 DB에서 bno가 생성되는 것이지만
         // selectKey를 통해서는 bno에 DB에 insert된 bno 값을 바로 불러올 수 있다.
         // boardService 까지 전달하기 위해서 ( file로 bno를 전달하는 곳 ) bno를 반환해준다 .
-        return boardDto.getBno();
     }
 
     @Override
