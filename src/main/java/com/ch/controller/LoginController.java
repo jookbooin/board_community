@@ -3,6 +3,8 @@ package com.ch.controller;
 
 import com.ch.dto.UserDto;
 import com.ch.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,9 +20,7 @@ import java.net.URLEncoder;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-//    @Autowired
-//    UserDao userDao;
-
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     UserService userService;
@@ -28,11 +28,13 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginForm() {
+
         return "loginForm";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
+
         // 1. 세션을 종료
         session.invalidate();
         // 2. 홈으로 이동

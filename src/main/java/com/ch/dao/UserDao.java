@@ -15,5 +15,12 @@ public interface UserDao {
 
     int deleteAll();
 
+    public int idCheck(String check);
+
+    public int nicknameCheck(String check);
+
+    public int emailCheck(String check);
+
+    public int numberCheck(String check);
 
 }

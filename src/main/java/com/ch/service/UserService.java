@@ -11,5 +11,13 @@ public interface UserService {
 
     UserDto selectUser(String id) throws Exception;
 
-    public int reset() throws Exception;
+    int reset() throws Exception;
+
+    int idCheck(String check) throws Exception;
+
+    int nicknameCheck(String check) throws Exception;
+
+    int emailCheck(String check) throws Exception;
+
+    int numberCheck(String check) throws Exception;
 }

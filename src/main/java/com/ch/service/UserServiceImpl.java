@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceImpl implements UserService {
-    //    @Autowired
+
     UserDao userDao;
 
     @Autowired
@@ -38,6 +38,26 @@ public class UserServiceImpl implements UserService {
     @Override
     public int reset() throws Exception {
         return userDao.deleteAll();
+    }
+
+    @Override
+    public int idCheck(String check) throws Exception {
+        return userDao.idCheck(check);
+    }
+
+    @Override
+    public int nicknameCheck(String check) throws Exception {
+        return userDao.nicknameCheck(check);
+    }
+
+    @Override
+    public int emailCheck(String check) throws Exception {
+        return userDao.emailCheck(check);
+    }
+
+    @Override
+    public int numberCheck(String check) throws Exception {
+        return userDao.numberCheck(check);
     }
 
 
