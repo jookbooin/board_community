@@ -5,7 +5,8 @@
 <mapper namespace="com.ch.dao.UserDao">
     <insert id="insert" parameterType="UserDto">
         INSERT INTO user_info
-        VALUES (#{id}, #{pwd}, #{name}, #{nickname}, #{number}, #{email}, #{birth}, now());
+        VALUES (#{id}, #{pwd}, #{name}, #{nickname}, #{number}, #{email}, #{birth}, #{addr_num}, #{addr_area},
+                #{addr_detail}, #{admin}, now());
     </insert>
 
     <delete id="deleteAll">
@@ -38,5 +39,12 @@
         WHERE id = #{id}
     </update>
 
+
+    <!--회원가입: 아이디 중복검사 -->
+    <select id="idCheck" resultType="int">
+        select count(*)
+        from user_info
+        where id = #{id}
+    </select>
 
 </mapper>

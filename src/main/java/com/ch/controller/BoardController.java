@@ -10,6 +10,8 @@ import com.ch.service.BoardService;
 import com.ch.service.FileService;
 import com.ch.service.UserService;
 import com.ch.util.FileUploadUtils;
+import org.mybatis.logging.Logger;
+import org.mybatis.logging.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -29,6 +31,7 @@ import java.util.List;
 @RequestMapping("/board")
 public class BoardController {
 
+    private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
     BoardService boardService;
     UserService userService;
     FileService fileService;
@@ -53,7 +56,7 @@ public class BoardController {
                 List<FileDto> fileDtolist = fileUploadUtils.getFileListByMurltiparts(files, uploadFolder());
                 boardDto.setFileDtolist(fileDtolist);
             }
-            
+
             // service
             System.out.println();
             boardService.write(boardDto);  // 여기서 파일 업로드
@@ -69,7 +72,7 @@ public class BoardController {
             e.printStackTrace();
             rattr.addFlashAttribute("msg", "WRT_ERR");
             m.addAttribute(boardDto);
-            return "boardList";
+            return "boardView/boardList";
         }
     }
 
@@ -82,7 +85,7 @@ public class BoardController {
         System.out.println();
         System.out.println("boardlist --> board:GET(/write)");
         System.out.println("mode = new");
-        return "board";
+        return "boardView/board";
     }
 
     @PostMapping("/remodify")
@@ -95,7 +98,7 @@ public class BoardController {
         m.addAttribute(boardDto);
         System.out.println("boardDto = " + boardDto);
 
-        return "board";
+        return "boardView/board";
     }
 
 
@@ -128,13 +131,13 @@ public class BoardController {
 
             rattr.addFlashAttribute("msg", "MOD_OK");
 
-            return "board";
+            return "boardView/board";
 
         } catch (Exception e) {
             e.printStackTrace();
             rattr.addFlashAttribute("msg", "MOD_ERR");
             m.addAttribute(boardDto);
-            return "board";
+            return "boardView/board";
         }
     }
 
@@ -154,7 +157,7 @@ public class BoardController {
 
         System.out.println();
         System.out.println("board:GET(/read) --> board");
-        return "board";
+        return "boardView/board";
     }
 
 
@@ -213,7 +216,7 @@ public class BoardController {
             e.printStackTrace();
         }
         System.out.println("board --> boardList");
-        return "boardList"; // 로그인을 한 상태이면, 게시판 화면으로 이동
+        return "boardView/boardList"; // 로그인을 한 상태이면, 게시판 화면으로 이동
     }
 
     private boolean loginCheck(HttpServletRequest request) { // 요청 헤더

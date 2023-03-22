@@ -41,5 +41,10 @@ public class UserDaoImpl implements UserDao {
         return session.delete(namespace + "deleteAll");
     }
 
+    @Override
+    public int idCheck(String id) {
+        return session.selectOne(namespace + "idCheck", id);
+    }
+
 
 }

@@ -40,5 +40,10 @@ public class UserServiceImpl implements UserService {
         return userDao.deleteAll();
     }
 
+    @Override
+    public int idCheck(String id) throws Exception {
+        return userDao.idCheck(id);
+    }
+
 
 }

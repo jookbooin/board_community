@@ -15,5 +15,6 @@ public interface UserDao {
 
     int deleteAll();
 
+    public int idCheck(String id);
 
 }

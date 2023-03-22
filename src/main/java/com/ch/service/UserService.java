@@ -12,4 +12,6 @@ public interface UserService {
     UserDto selectUser(String id) throws Exception;
 
     public int reset() throws Exception;
+
+    public int idCheck(String id) throws Exception;
 }
