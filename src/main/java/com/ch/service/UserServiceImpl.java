@@ -41,6 +41,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+
     public int idCheck(String check) throws Exception {
         return userDao.idCheck(check);
     }
@@ -58,6 +59,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public int numberCheck(String check) throws Exception {
         return userDao.numberCheck(check);
+
     }
 
 

@@ -42,6 +42,7 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
+
     public int idCheck(String check) {
         return session.selectOne(namespace + "idCheck", check);
     }
@@ -59,7 +60,6 @@ public class UserDaoImpl implements UserDao {
     @Override
     public int numberCheck(String check) {
         return session.selectOne(namespace + "numberCheck", check);
+
     }
-
-
 }

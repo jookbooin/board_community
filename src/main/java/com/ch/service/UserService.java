@@ -10,8 +10,7 @@ public interface UserService {
     int modifyUser(UserDto userDto) throws Exception;
 
     UserDto selectUser(String id) throws Exception;
-
-    int reset() throws Exception;
+    
 
     int idCheck(String check) throws Exception;
 
@@ -20,4 +19,7 @@ public interface UserService {
     int emailCheck(String check) throws Exception;
 
     int numberCheck(String check) throws Exception;
+
+    public int reset() throws Exception;
+
 }
