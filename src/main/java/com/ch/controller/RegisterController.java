@@ -15,7 +15,7 @@ import javax.validation.Valid;
 @Controller
 @RequestMapping("/register")
 public class RegisterController {
-    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
+    private static final Logger logger = LoggerFactory.getLogger(RegisterController.class);
 
     UserService userService;
 
