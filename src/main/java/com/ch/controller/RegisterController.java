@@ -29,9 +29,8 @@ public class RegisterController {
     }
 
     @GetMapping("/add")
-    public String register() {
+    public String register(@ModelAttribute UserDto userDto) {
         logger.info("회원가입 페이지 진입");
-
         return "registerForm"; // WEB-INF/views/registerForm.jsp
     }
 
@@ -48,6 +47,7 @@ public class RegisterController {
                 return "index";
         }
 //       return "redirect:/register/add"; // 신규회원 가입화면으로 이동(redirect)
+//        return "forward:/register/add"; // 신규회원 가입화면으로 이동(redirect)
         return "registerForm";
     }
 

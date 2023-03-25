@@ -6,16 +6,24 @@ import java.util.Date;
 import java.util.Objects;
 
 public class UserDto {
+
     private String id;
+
     private String pwd;
+
     private String name;
+
     private String nickname;
+
     private String number;
+
     private String email;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth;
     // 우편번호
+
     private String addr_num;
+
     //사는 지역
     private String addr_area;
     // 상세주소

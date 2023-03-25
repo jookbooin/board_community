@@ -43,3 +43,14 @@
     color: red;
     display: none;
 }
+
+/*pwd 일치하는지 확인*/
+#pwd_check_eq {
+    color: green;
+    display: none;
+}
+
+#pwd_check_ne {
+    color: red;
+    display: none;
+}

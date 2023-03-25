@@ -1,6 +1,7 @@
 <%@ page contentType="text/html;charset=utf-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ page session="false" %>
 <%@ page import="java.net.URLDecoder" %>
 
 <!DOCTYPE html>
@@ -17,7 +18,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
-    <script src="<c:url value='/resources/js/daum_address.js'/>"></script>
+    <script src="<c:url value='/js/daum_address.js'/>"></script>
+    <script src="<c:url value='/js/registerForm/formCheck.js'/>"></script>
 
     <title>Register</title>
 </head>
@@ -33,87 +35,89 @@
     </ul>
 </div>
 
-<form:form modelAttribute="userDto">
+<form:form modelAttribute="userDto" onsubmit="return formCheck(this)">
     <div class="title">Register</div>
     <%--    <div id="msg" class="msg"><form:errors path="id"/></div>--%>
 
     <div class="form-group">
-        <input class="input-field" id="id-input" type="text" name="id" placeholder="아이디">
+        <form:input path="id" class="input-field" id="id-input" type="text" name="id" placeholder="아이디"/>
         <div class="msg">
-            <form:errors path="id" cssClass="msg"/>
+            <form:errors path="id" id="id_error"/>
             <span id="id_available">사용 가능한 아이디입니다.</span>
             <span id="id_exist">사용중인 아이디 입니다</span>
         </div>
     </div>
 
     <div class="form-group">
-
-        <input class="input-field" type="text" name="pwd" placeholder="비밀번호">
+        <form:input path="pwd" class="input-field" id="pwd-input" type="text" name="pwd" placeholder="비밀번호"/>
         <div class="msg">
-            <form:errors path="pwd"/>
+                <%--            <form:errors path="pwd" id="pwd_error"/>--%>
 
         </div>
             <%--        비밀번호 확인 --%>
-        <input class="input-field" name="pwd_ck">
+        <input class="input-field" id="pwd-check" name="pwd_ck">
         <div class="msg">
-                <%--            <form:errors path="pwd_ck"/>--%>
+            <span id="pwd_check_eq" style="display: none">비밀번호가 일치합니다</span>
+            <span id="pwd_check_ne" style="display: none">비밀번호가 일치하지 않습니다.</span>
+                <%--            <form:errors path="pwd" id="pwd_error"/>--%>
         </div>
     </div>
 
     <div class="form-group">
-        <input class="input-field" type="text" name="name" placeholder="이름">
+        <form:input path="name" class="input-field" type="text" name="name" placeholder="이름"/>
         <div class="msg"></div>
     </div>
 
     <div class="form-group">
-        <input class="input-field" id="nickname-input" type="text" name="nickname" placeholder="닉네임">
+        <form:input path="nickname" class="input-field" id="nickname-input" type="text" name="nickname"
+                    placeholder="닉네임"/>
         <div class="msg">
             <span id="nick_available">사용 가능한 닉네임입니다.</span>
             <span id="nick_exist">사용 중인 닉네임입니다.</span>
+            <form:errors path="nickname" id="nickname_error"/>
         </div>
     </div>
 
     <div class="form-group">
-        <input class="input-field" id="number-input" type="text" name="number" placeholder="전화번호">
+        <form:input path="number" class="input-field" id="number-input" type="text" name="number" placeholder="전화번호"/>
         <div class="msg">
             <span id="num_available">등록가능한 번호 입니다.</span>
             <span id="num_exist">이미 등록된 번호 입니다</span>
+            <form:errors path="number" id="number_error"/>
+
         </div>
     </div>
 
     <div class="form-group">
-        <input class="input-field" id="email-input" type="text" name="email" placeholder="이메일">
+        <form:input path="email" class="input-field" id="email-input" type="text" name="email" placeholder="이메일"/>
         <div class="msg">
             <span id="email_available">등록가능한 이메일 입니다.</span>
             <span id="email_exist">등록된 이메일 입니다</span>
-            <form:errors path="email"/>
+            <form:errors path="email" id="email_error"/>
         </div>
-            <%--        <div id="email_num">--%>
-            <%--            <input class="input-field" name="email_num">--%>
-            <%--            <span>인증번호 전송</span>--%>
-            <%--        </div>--%>
-            <%--        <div class="msg">--%>
-            <%--                &lt;%&ndash;            <form:errors path="email_num"/>&ndash;%&gt;--%>
-            <%--        </div>--%>
+
     </div>
 
     <div class="form-group">
-        <input class="input-field" type="text" name="birth" placeholder="생년월일">
+        <form:input path="birth" class="input-field" type="text" name="birth" placeholder="생년월일"/>
         <div class="msg"></div>
     </div>
 
     <div class="form-group">
         <div id="addr_num">
-            <input class="input-field" type="text" name="addr_num" placeholder="우편번호" readonly="readonly">
+            <form:input path="addr_num" class="input-field" type="text" name="addr_num" placeholder="우편번호"
+                        readonly="readonly"/>
                 <%--            <button type="button">우편번호 찾기</button>--%>
             <input id="address_num" type="button" onclick="daum_address()" value="우편번호 찾기"/>
         </div>
         <div id="addr_area">
-            <input class="input-field" type="text" name="addr_area" placeholder="사는 지역" readonly="readonly">
+            <form:input path="addr_area" class="input-field" type="text" name="addr_area" placeholder="사는 지역"
+                        readonly="readonly"/>
         </div>
 
         <div id="addr_detail">
-            <input class="input-field" type="text" name="addr_detail" placeholder="상세주소" readonly="readonly">
+            <form:input path="addr_detail" class="input-field" type="text" name="addr_detail" placeholder="상세주소"
+                        readonly="readonly"/>
         </div>
 
         <input class="input-field" type="hidden" name="admin" value="0">
@@ -121,34 +125,18 @@
 
     <button>회원 가입</button>
 </form:form>
+<
 
-<script>
-    function formCheck(frm) {
-        let msg = '';
-        if (frm.id.value.length < 3) {
-            setMessage('id의 길이는 3이상이어야 합니다.', frm.id);
-            return false;
-        }
-        if (frm.pwd.value.length < 3) {
-            setMessage('pwd의 길이는 3이상이어야 합니다.', frm.pwd);
-            return false;
-        }
-
-        return true;
-    }
-
-    function setMessage(msg, element) {
-        document.getElementById("msg").innerHTML = `<i class="fa fa-exclamation-circle"> ${'${msg}'}</i>`;
-        if (element) {
-            element.select();
-        }
-    }
-
-
-</script>
 
 <%--AJAX : 중복체크 --%>
 <script>
+    let id_check = false;
+    let nickname_check = false;
+    let mail_check = false;
+    let number_check = false;
+    let pwd_eq_check = false;
+
+
     $('#id-input').on("propertychange change keyup paste input", function () {
         let check = $('#id-input').val(); // 입력되는 값
         let data = {check: check}      // controller 전달
@@ -158,11 +146,15 @@
             data: data,
             success: function (result) {
                 if (result == 'success') {
+                    $('#id_error').css("display", "none");
                     $('#id_available').css("display", "inline-block");
                     $('#id_exist').css("display", "none");
+                    id_check = true;
                 } else {
+                    $('#id_error').css("display", "none");
                     $('#id_exist').css("display", "inline-block");
                     $('#id_available').css("display", "none");
+                    id_check = false;
                 }
             }
         });
@@ -176,11 +168,15 @@
             data: data,
             success: function (result) {
                 if (result == 'success') {
+                    $('#nickname_error').css("display", "none");
                     $('#nick_available').css("display", "inline-block");
                     $('#nick_exist').css("display", "none");
+                    nickname_check = true;
                 } else {
+                    $('#nickname_error').css("display", "none");
                     $('#nick_exist').css("display", "inline-block");
                     $('#nick_available').css("display", "none");
+                    nickname_check = false;
                 }
             }
         });
@@ -195,11 +191,15 @@
             data: data,
             success: function (result) {
                 if (result == 'success') {
+                    $('#email_error').css("display", "none");
                     $('#email_available').css("display", "inline-block");
                     $('#email_exist').css("display", "none");
+                    mail_check = true;
                 } else {
+                    $('#email_error').css("display", "none");
                     $('#email_exist').css("display", "inline-block");
                     $('#email_available').css("display", "none");
+                    mail_check = false;
                 }
             }
         });
@@ -214,11 +214,15 @@
             data: data,
             success: function (result) {
                 if (result == 'success') {
+                    $('#number_error').css("display", "none");
                     $('#num_available').css("display", "inline-block");
                     $('#num_exist').css("display", "none");
+                    number_check = true;
                 } else {
+                    $('#number_error').css("display", "none");
                     $('#num_exist').css("display", "inline-block");
                     $('#num_available').css("display", "none");
+                    number_check = false;
                 }
             }
         });
@@ -226,55 +230,21 @@
 </script>
 
 <script>
-    // function daum_address() {
-    //     new daum.Postcode({
-    //         oncomplete: function (data) {
-    //             // 팝업에서 검색결과 항목을 클릭했을때 실행할 코드를 작성하는 부분.
-    //
-    //             // 각 주소의 노출 규칙에 따라 주소를 조합한다.
-    //             // 내려오는 변수가 값이 없는 경우엔 공백('')값을 가지므로, 이를 참고하여 분기 한다.
-    //             var addr = ''; // 주소 변수
-    //             var extraAddr = ''; // 참고항목 변수
-    //
-    //             //사용자가 선택한 주소 타입에 따라 해당 주소 값을 가져온다.
-    //             if (data.userSelectedType === 'R') { // 사용자가 도로명 주소를 선택했을 경우
-    //                 addr = data.roadAddress;
-    //             } else { // 사용자가 지번 주소를 선택했을 경우(J)
-    //                 addr = data.jibunAddress;
-    //             }
-    //
-    //             // 사용자가 선택한 주소가 도로명 타입일때 참고항목을 조합한다.
-    //             if (data.userSelectedType === 'R') {
-    //                 // 법정동명이 있을 경우 추가한다. (법정리는 제외)
-    //                 // 법정동의 경우 마지막 문자가 "동/로/가"로 끝난다.
-    //                 if (data.bname !== '' && /[동|로|가]$/g.test(data.bname)) {
-    //                     extraAddr += data.bname;
-    //                 }
-    //                 // 건물명이 있고, 공동주택일 경우 추가한다.
-    //                 if (data.buildingName !== '' && data.apartment === 'Y') {
-    //                     extraAddr += (extraAddr !== '' ? ', ' + data.buildingName : data.buildingName);
-    //                 }
-    //                 // 표시할 참고항목이 있을 경우, 괄호까지 추가한 최종 문자열을 만든다.
-    //                 if (extraAddr !== '') {
-    //                     extraAddr = ' (' + extraAddr + ')';
-    //                 }
-    //                 // 주소변수 문자열과 참고항목 문자열 합치기
-    //                 addr += extraAddr;
-    //
-    //             } else {
-    //                 addr += ' ';
-    //             }
-    //
-    //             // 우편번호와 주소 정보를 해당 필드에 넣는다.
-    //             $("[name=addr_num]").val(data.zonecode);
-    //             $("[name=addr_area]").val(addr);
-    //             // 커서를 상세주소 필드로 이동한다.
-    //             $("[name=addr_detail]").attr("readonly", false);
-    //             $("[name=addr_detail]").focus();
-    //
-    //         }
-    //     }).open();
-    // }
+    $('#pwd-check').on("propertychange change keyup paste input", function () {
+        let pw = $('#pwd-input').val();
+        let pwck = $('#pwd-check').val();
+
+        if (pw == pwck) {
+            $('#pwd_check_eq').css('display', 'block');
+            $('#pwd_check_ne').css('display', 'none');
+            pwd_eq_check = true;
+        } else {
+            $('#pwd_check_eq').css('display', 'none');
+            $('#pwd_check_ne').css('display', 'block');
+            pwd_eq_check = false;
+        }
+
+    });
 </script>
 </body>
 </html>
