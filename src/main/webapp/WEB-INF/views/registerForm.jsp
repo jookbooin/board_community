@@ -51,11 +51,11 @@
     <div class="form-group">
         <form:input path="pwd" class="input-field" id="pwd-input" type="text" name="pwd" placeholder="비밀번호"/>
         <div class="msg">
-                <%--            <form:errors path="pwd" id="pwd_error"/>--%>
+            <form:errors path="pwd" id="pwd_error"/>
 
         </div>
             <%--        비밀번호 확인 --%>
-        <input class="input-field" id="pwd-check" name="pwd_ck">
+        <input class="input-field" id="pwd-check" name="pwd_ck" placeholder="비밀번호 확인">
         <div class="msg">
             <span id="pwd_check_eq" style="display: none">비밀번호가 일치합니다</span>
             <span id="pwd_check_ne" style="display: none">비밀번호가 일치하지 않습니다.</span>
@@ -107,7 +107,7 @@
         <div id="addr_num">
             <form:input path="addr_num" class="input-field" type="text" name="addr_num" placeholder="우편번호"
                         readonly="readonly"/>
-                <%--            <button type="button">우편번호 찾기</button>--%>
+                <%--<button type="button">우편번호 찾기</button>--%>
             <input id="address_num" type="button" onclick="daum_address()" value="우편번호 찾기"/>
         </div>
         <div id="addr_area">

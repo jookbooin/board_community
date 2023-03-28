@@ -19,16 +19,14 @@ public class UserValidator implements Validator {
         String id = user.getId();
         String pwd = user.getPwd();
 
-
         if (id == null || id.length() < 5 || id.length() > 12) {
             errors.rejectValue("id", "invalidlength", new String[]{"5", "12"}, null);
         }
 
-//        if (pwd.equals(""))
-//            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "pwd", "required");
-//        else if (pwd == null || pwd.length() < 5 || pwd.length() > 12) {
-//            errors.rejectValue("pwd", "invalidlength", new String[]{"5", "12"}, null);
-//        }
+
+        if (pwd == null || pwd.length() < 5 || pwd.length() > 12) {
+            errors.rejectValue("pwd", "invalidlength", new String[]{"5", "12"}, null);
+        }
 
 
     }

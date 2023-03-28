@@ -62,4 +62,6 @@ public class UserDaoImpl implements UserDao {
         return session.selectOne(namespace + "numberCheck", check);
 
     }
+
+
 }

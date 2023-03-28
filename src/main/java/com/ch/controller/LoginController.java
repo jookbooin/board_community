@@ -49,16 +49,17 @@ public class LoginController {
         if (!loginCheck(id, pwd)) {
             // 2-1   일치하지 않으면, loginForm으로 이동
             String msg = URLEncoder.encode("id 또는 pwd가 일치하지 않습니다.", "utf-8");
-
             return "redirect:/login/login?msg=" + msg;
         }
         // 2-2. id와 pwd가 일치하면,
         //  세션 객체를 얻어오기
         HttpSession session = request.getSession();
         //  세션 객체에 id를 저장
-        session.setAttribute("id", id);
-
-
+        UserDto loginUser = userService.selectUser(id);
+        logger.info("loginUser={}", loginUser);  // 데이터 전부 가져옴
+//        session.setAttribute("id", id);
+        session.setAttribute("user", loginUser);
+//        m.addAttribute("user", loginUser);
         if (rememberId) { // 체크박스 눌려 있으면
             //     1. 쿠키를 생성
             Cookie cookie = new Cookie("id", id);
@@ -81,7 +82,6 @@ public class LoginController {
 
         try {
             user = userService.selectUser(id);
-
         } catch (Exception e) {
             e.printStackTrace();
             return false;

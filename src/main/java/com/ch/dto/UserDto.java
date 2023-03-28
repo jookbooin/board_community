@@ -1,7 +1,10 @@
 package com.ch.dto;
 
+
 import org.springframework.format.annotation.DateTimeFormat;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 import java.util.Objects;
 
@@ -16,7 +19,8 @@ public class UserDto {
     private String nickname;
 
     private String number;
-
+    @NotNull
+    @Email(message = "Invalid email address")
     private String email;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date birth;
