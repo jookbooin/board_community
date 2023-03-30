@@ -6,10 +6,13 @@ import com.ch.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -34,11 +37,21 @@ public class LoginController {
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-
+        logger.info("로그아웃");
         // 1. 세션을 종료
         session.invalidate();
         // 2. 홈으로 이동
         return "redirect:/";
+    }
+
+    @PostMapping("/gnbLogout")
+    @ResponseBody
+    public ResponseEntity<String> gnbLogout(HttpSession session) {
+        logger.info("gnb 로그아웃");
+        // 1. 세션을 종료
+        session.invalidate();
+        // 2. 현재 페이지
+        return new ResponseEntity<String>("gnblogOut", HttpStatus.OK);
     }
 
     @PostMapping("/login")

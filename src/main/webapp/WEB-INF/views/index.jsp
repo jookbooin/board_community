@@ -18,12 +18,9 @@
     <title>Index</title>
     <link rel="stylesheet" href="<c:url value='/resources/css/index.css'/>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <body>
-
-<%--<div id="gnb">--%>
-<%--    gnb 영역--%>
-
 <%--</div>--%>
 <%--<div id="search">--%>
 <%--    검색 영역--%>
@@ -43,19 +40,34 @@
     <div class="wrap">
         <div class="top_gnb_area">
             <ul class="list">
-                <c:if test="${member == null}">
-
-
+                <c:if test="${user == null}">
                     <li>
-                        <a href="<c:url value='${loginOutLink}'/>">로그인</a>
+                        <a href="<c:url value='${loginOutLink}'/>">${loginOut}</a>
                     </li>
                     <li>
                         <a href="<c:url value='/register/add'/>">회원가입</a>
                     </li>
                 </c:if>
+
+                <c:if test="${user != null}">
+                    <li>
+                            <%--Ajax : 로그아웃은 현재 페이지 안에서만 작동 --%>
+                        <a id="gnb_logout_button">${loginOut}</a>
+                    </li>
+                    <li>
+                        내정보
+                    </li>
+                    <li>
+                        장바구니
+                    </li>
+                </c:if>
                 <li>
                     <a href="<c:url value='/board/list'/>">고객센터</a>
                 </li>
+                <%-- 관리자 계정 --%>
+                <c:if test="${user.admin==1}">
+                    <li><a href="<c:url value='/admin/home'/>">관리자 홈</a></li>
+                </c:if>
             </ul>
         </div>
         <div class="top_area">
@@ -102,3 +114,16 @@
 </div>
 </body>
 </html>
+<script>
+    $("#gnb_logout_button").click(function () {
+        $.ajax({
+            type: "POST",
+            url: "<c:url value='/login/gnbLogout'/>",
+            success: function (result) {
+                //  location은 페이지의 위치 나타냄
+                // Post 데이터를 포함해 페이지를 새로 고침 합니다.
+                document.location.reload();
+            }
+        }); // ajax
+    });
+</script>
