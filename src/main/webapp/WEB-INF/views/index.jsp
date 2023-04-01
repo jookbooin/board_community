@@ -21,20 +21,6 @@
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
 <body>
-<%--</div>--%>
-<%--<div id="search">--%>
-<%--    검색 영역--%>
-<%--</div>--%>
-<%--<div id="menu">--%>
-<%--    <ul>--%>
-<%--        <li id="logo"><a href="<c:url value='/'/>">Home</a></li>--%>
-<%--        <li><a href="<c:url value='/test'/>">test</a></li>--%>
-<%--        <li><a href="<c:url value='/board/list'/>">Board</a></li>--%>
-<%--        <li><a href="<c:url value='${loginOutLink}'/>">${loginOut}</a></li>--%>
-<%--        <li><a href="<c:url value='/register/add'/>">Sign in</a></li>--%>
-<%--        <li><a href=""><i class="fa fa-search"></i></a></li>--%>
-<%--    </ul>--%>
-<%--</div>--%>
 
 <div class="wrapper">
     <div class="wrap">
@@ -50,10 +36,17 @@
                 </c:if>
 
                 <c:if test="${user != null}">
-                    <li>
-                            <%--Ajax : 로그아웃은 현재 페이지 안에서만 작동 --%>
-                        <a id="gnb_logout_button">${loginOut}</a>
-                    </li>
+                    <%-- 관리자 계정 --%>
+                    <c:if test="${user.admin==1}">
+                        <li><a href="<c:url value='/admin/home'/>">관리자 홈</a></li>
+                        <li><a href="<c:url value='${loginOutLink}'/>">${loginOut}</a></li>
+                    </c:if>
+                    <%--일반 사용자--%>
+                    <c:if test="${user.admin==0}">
+                        <li><%--Ajax : 로그아웃은 현재 페이지 안에서만 작동 --%>
+                            <a id="gnb_logout_button">${loginOut}</a>
+                        </li>
+                    </c:if>
                     <li>
                         내정보
                     </li>
@@ -64,10 +57,7 @@
                 <li>
                     <a href="<c:url value='/board/list'/>">고객센터</a>
                 </li>
-                <%-- 관리자 계정 --%>
-                <c:if test="${user.admin==1}">
-                    <li><a href="<c:url value='/admin/home'/>">관리자 홈</a></li>
-                </c:if>
+
             </ul>
         </div>
         <div class="top_area">

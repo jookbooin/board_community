@@ -31,13 +31,13 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginForm() {
-
+        logger.info("로그인 화면");
         return "loginForm";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
-        logger.info("로그아웃");
+        logger.info("홈으로 로그아웃");
         // 1. 세션을 종료
         session.invalidate();
         // 2. 홈으로 이동
@@ -47,7 +47,7 @@ public class LoginController {
     @PostMapping("/gnbLogout")
     @ResponseBody
     public ResponseEntity<String> gnbLogout(HttpSession session) {
-        logger.info("gnb 로그아웃");
+        logger.info("gnb 현재페이지_로그아웃");
         // 1. 세션을 종료
         session.invalidate();
         // 2. 현재 페이지

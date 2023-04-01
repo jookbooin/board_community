@@ -46,5 +46,16 @@
         <beans:property name="maxInMemorySize" value="1048576"/> <!-- 1MB -->
     </beans:bean>
 
+    <!-- 인터셉터 적용 -->
+    <interceptors>
+        <interceptor>
+            <mapping path="/login/login"></mapping>
+            <beans:bean id="loginIntreceptor" class="com.ch.interceptor.LoginInterceptor"></beans:bean>
+        </interceptor>
+        <interceptor>
+            <mapping path="/admin/**"></mapping>
+            <beans:bean id="AdminIntreceptor" class="com.ch.interceptor.AdminInterceptor"></beans:bean>
+        </interceptor>
+    </interceptors>
 
 </beans:beans>
