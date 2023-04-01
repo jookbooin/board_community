@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public class UserDaoImpl implements UserDao {
-    private static String namespace = "com.ch.dao.UserDao.";
+    private static final String namespace = "com.ch.dao.UserDao.";
 
     @Autowired
     private SqlSession session;
@@ -39,6 +39,28 @@ public class UserDaoImpl implements UserDao {
     @Override
     public int deleteAll() {
         return session.delete(namespace + "deleteAll");
+    }
+
+    @Override
+
+    public int idCheck(String check) {
+        return session.selectOne(namespace + "idCheck", check);
+    }
+
+    @Override
+    public int nicknameCheck(String check) {
+        return session.selectOne(namespace + "nicknameCheck", check);
+    }
+
+    @Override
+    public int emailCheck(String check) {
+        return session.selectOne(namespace + "emailCheck", check);
+    }
+
+    @Override
+    public int numberCheck(String check) {
+        return session.selectOne(namespace + "numberCheck", check);
+
     }
 
 

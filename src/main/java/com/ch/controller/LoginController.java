@@ -3,11 +3,16 @@ package com.ch.controller;
 
 import com.ch.dto.UserDto;
 import com.ch.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -18,9 +23,7 @@ import java.net.URLEncoder;
 @Controller
 @RequestMapping("/login")
 public class LoginController {
-//    @Autowired
-//    UserDao userDao;
-
+    private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     UserService userService;
@@ -28,15 +31,27 @@ public class LoginController {
 
     @GetMapping("/login")
     public String loginForm() {
+        logger.info("로그인 화면");
         return "loginForm";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
+        logger.info("홈으로 로그아웃");
         // 1. 세션을 종료
         session.invalidate();
         // 2. 홈으로 이동
         return "redirect:/";
+    }
+
+    @PostMapping("/gnbLogout")
+    @ResponseBody
+    public ResponseEntity<String> gnbLogout(HttpSession session) {
+        logger.info("gnb 현재페이지_로그아웃");
+        // 1. 세션을 종료
+        session.invalidate();
+        // 2. 현재 페이지
+        return new ResponseEntity<String>("gnblogOut", HttpStatus.OK);
     }
 
     @PostMapping("/login")
@@ -47,16 +62,17 @@ public class LoginController {
         if (!loginCheck(id, pwd)) {
             // 2-1   일치하지 않으면, loginForm으로 이동
             String msg = URLEncoder.encode("id 또는 pwd가 일치하지 않습니다.", "utf-8");
-
             return "redirect:/login/login?msg=" + msg;
         }
         // 2-2. id와 pwd가 일치하면,
         //  세션 객체를 얻어오기
         HttpSession session = request.getSession();
         //  세션 객체에 id를 저장
-        session.setAttribute("id", id);
-
-
+        UserDto loginUser = userService.selectUser(id);
+        logger.info("loginUser={}", loginUser);  // 데이터 전부 가져옴
+//        session.setAttribute("id", id);
+        session.setAttribute("user", loginUser);
+//        m.addAttribute("user", loginUser);
         if (rememberId) { // 체크박스 눌려 있으면
             //     1. 쿠키를 생성
             Cookie cookie = new Cookie("id", id);
@@ -79,7 +95,6 @@ public class LoginController {
 
         try {
             user = userService.selectUser(id);
-
         } catch (Exception e) {
             e.printStackTrace();
             return false;

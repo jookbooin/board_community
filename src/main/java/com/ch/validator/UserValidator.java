@@ -2,7 +2,6 @@ package com.ch.validator;
 
 import com.ch.dto.UserDto;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 public class UserValidator implements Validator {
@@ -20,18 +19,12 @@ public class UserValidator implements Validator {
         String id = user.getId();
         String pwd = user.getPwd();
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required");
-
-
-        if (id.equals(""))
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "id", "required");
-        else if (id == null || id.length() < 5 || id.length() > 12) {
+        if (id == null || id.length() < 5 || id.length() > 12) {
             errors.rejectValue("id", "invalidlength", new String[]{"5", "12"}, null);
         }
 
-        if (pwd.equals(""))
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "pwd", "required");
-        else if (pwd == null || pwd.length() < 5 || pwd.length() > 12) {
+
+        if (pwd == null || pwd.length() < 5 || pwd.length() > 12) {
             errors.rejectValue("pwd", "invalidlength", new String[]{"5", "12"}, null);
         }
 

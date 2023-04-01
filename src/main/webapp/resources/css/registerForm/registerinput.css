@@ -1,0 +1,56 @@
+/*    중복아이디 존재하지 않는 경우*/
+#id_available {
+    color: green;
+    display: none;
+}
+
+/* 중복아이디 존재하는 경우 */
+#id_exist {
+    color: red;
+    display: none;
+}
+
+#nick_available {
+    color: green;
+    display: none;
+}
+
+/* 중복아이디 존재하는 경우 */
+#nick_exist {
+    color: red;
+    display: none;
+}
+
+#email_available {
+    color: green;
+    display: none;
+}
+
+/* 중복아이디 존재하는 경우 */
+#email_exist {
+    color: red;
+    display: none;
+}
+
+
+#num_available {
+    color: green;
+    display: none;
+}
+
+/* 중복아이디 존재하는 경우 */
+#num_exist {
+    color: red;
+    display: none;
+}
+
+/*pwd 일치하는지 확인*/
+#pwd_check_eq {
+    color: green;
+    display: none;
+}
+
+#pwd_check_ne {
+    color: red;
+    display: none;
+}
