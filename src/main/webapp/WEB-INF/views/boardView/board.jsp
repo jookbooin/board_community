@@ -83,70 +83,70 @@
         /*    text-decoration: underline;*/
         /*}*/
 
-        /*#comment {*/
-        /*    width: 50%;*/
-        /*    !*height: 100%;*!*/
-        /*    margin: auto;*/
-        /*    background: red;*/
-        /*}*/
+        #comment {
+            width: 50%;
+            /*height: 100%;*/
+            margin: auto;
+            background: red;
+        }
 
-        /*#commentList {*/
-        /*    !*width: 50%;*!*/
-        /*    !*    height: 100%;*!*/
-        /*    margin: auto;*/
-        /*    background: khaki;*/
-        /*}*/
+        #commentList {
+            /*width: 50%;*/
+            /*    height: 100%;*/
+            margin: auto;
+            background: khaki;
+        }
 
-        /* commenter commenter-writebox*/
-        /*.commenter {*/
-        /*    font-size: 12pt;*/
-        /*    font-weight: bold;*/
-        /*}*/
+        commenter commenter-writebox
+        .commenter {
+            font-size: 12pt;
+            font-weight: bold;
+        }
 
-        /*.commenter-writebox {*/
-        /*    padding: 15px 20px 20px 20px;*/
-        /*}*/
+        .commenter-writebox {
+            padding: 15px 20px 20px 20px;
+        }
 
-        /*댓글 입력*/
-        /*.writebox-bottom {*/
-        /*    padding: 0px 10px 10px 10px;*/
-        /*    min-height: 45px;*/
-        /*}*/
+        댓글 입력
+        .writebox-bottom {
+            padding: 0px 10px 10px 10px;
+            min-height: 45px;
+        }
 
-        /*#comment-Form {*/
-        /*    margin-top: 10px;*/
-        /*    background-color: white;*/
-        /*    border: 1px solid #e5e5e5;*/
-        /*    border-radius: 5px;*/
-        /*    margin: 10px;*/
-        /*}*/
+        #comment-Form {
+            margin-top: 10px;
+            background-color: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 5px;
+            margin: 10px;
+        }
 
-        /*#comment-rep-Form,*/
-        /*#comment-mod-Form {*/
-        /*    display: none;*/
-        /*    background-color: white;*/
-        /*    border: 1px solid #e5e5e5;*/
-        /*    border-radius: 5px;*/
-        /*    margin: 10px;*/
-        /*}*/
+        #comment-rep-Form,
+        #comment-mod-Form {
+            display: none;
+            background-color: white;
+            border: 1px solid #e5e5e5;
+            border-radius: 5px;
+            margin: 10px;
+        }
 
 
-        /*.btn {*/
-        /*    font-size: 10pt;*/
-        /*    color: black;*/
-        /*    background-color: #eff0f2;*/
-        /*    text-decoration: none;*/
-        /*    padding: 9px 10px 9px 10px;*/
-        /*    border-radius: 5px;*/
-        /*    float: right;*/
-        /*}*/
+        .btn {
+            font-size: 10pt;
+            color: black;
+            background-color: #eff0f2;
+            text-decoration: none;
+            padding: 9px 10px 9px 10px;
+            border-radius: 5px;
+            float: right;
+        }
 
-        /*#comment-wriBtn,*/
-        /*#modcomment-wriBtn,*/
-        /*#recomment-wriBtn {*/
-        /*    color: #009f47;*/
-        /*    background-color: #e0f8eb;*/
-        /*}*/
+        #comment-wriBtn,
+        #modcomment-wriBtn,
+        #recomment-wriBtn {
+            color: #009f47;
+            background-color: #e0f8eb;
+        }
 
     </style>
 </head>

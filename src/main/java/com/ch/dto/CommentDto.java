@@ -1,8 +1,15 @@
 package com.ch.dto;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.util.Date;
 import java.util.Objects;
 
+@Getter
+@Setter
+@ToString
 public class CommentDto {
     private Integer cno;
     private Integer bno;
@@ -37,81 +44,4 @@ public class CommentDto {
         return Objects.hash(cno, bno, pcno, comment, commenter, commenterId);
     }
 
-    public String getCommenterId() {
-        return commenterId;
-    }
-
-    public void setCommenterId(String commenterId) {
-        this.commenterId = commenterId;
-    }
-
-    public Integer getBno() {
-        return bno;
-    }
-
-    public void setBno(Integer bno) {
-        this.bno = bno;
-    }
-
-    public Integer getPcno() {
-        return pcno;
-    }
-
-    public void setPcno(Integer pcno) {
-        this.pcno = pcno;
-    }
-
-    public String getComment() {
-        return comment;
-    }
-
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
-
-    public String getCommenter() {
-        return commenter;
-    }
-
-    public void setCommenter(String commenter) {
-        this.commenter = commenter;
-    }
-
-    public Date getReg_date() {
-        return reg_date;
-    }
-
-    public void setReg_date(Date reg_date) {
-        this.reg_date = reg_date;
-    }
-
-    public Date getUp_date() {
-        return up_date;
-    }
-
-    public void setUp_date(Date up_date) {
-        this.up_date = up_date;
-    }
-
-    public Integer getCno() {
-        return cno;
-    }
-
-    public void setCno(Integer cno) {
-        this.cno = cno;
-    }
-
-    @Override
-    public String toString() {
-        return "CommentDto={" +
-                "cno=" + cno +
-                ", bno=" + bno +
-                ", pcno=" + pcno +
-                ", comment='" + comment + '\'' +
-                ", commenter='" + commenter + '\'' +
-                ", commenterId='" + commenterId + '\'' +
-                ", reg_date=" + reg_date +
-                ", up_date=" + up_date +
-                '}';
-    }
 }

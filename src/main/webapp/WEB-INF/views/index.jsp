@@ -16,7 +16,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Index</title>
-    <link rel="stylesheet" href="<c:url value='/resources/css/index.css'/>">
+    <link rel="stylesheet" href="<c:url value='/css/index.css'/>">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.8.2/css/all.min.css"/>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
 </head>
@@ -61,8 +61,9 @@
             </ul>
         </div>
         <div class="top_area">
+            <%--로고영역--%>
             <div class="logo_area">
-                <h1>logo area</h1>
+                <a href="<c:url value='/'/>"><img src="<c:url value='/img/logo.jpg'/>"></a>
             </div>
             <div class="search_area">
                 <h1>Search area</h1>
@@ -91,17 +92,11 @@
         <div class="content_area">
             <h1>content area</h1>
         </div>
+
+        <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
     </div>
 </div>
 
-</body>
-</html>
-
-<div style="text-align:center">
-    <h1>This is HOME</h1>
-    <h1>This is HOME</h1>
-    <h1>This is HOME</h1>
-</div>
 </body>
 </html>
 <script>

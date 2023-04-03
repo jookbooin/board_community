@@ -8,36 +8,36 @@ import java.util.List;
 import java.util.Map;
 
 public interface BoardDao {
-    int count() throws Exception // T selectOne(String statement)
+    int count() // T selectOne(String statement)
     ;
 
-    int deleteAll() throws Exception  // int delete(String statement)
+    int deleteAll() // int delete(String statement)
     ;
 
-    int delete(Integer bno, String writer) throws Exception // int delete(String statement, Object parameter)
+    int delete(Integer bno, String writer)  // int delete(String statement, Object parameter)
     ;
 
-    int insert(BoardDto dto) throws Exception // int insert(String statement, Object parameter)
+    int insert(BoardDto dto) // int insert(String statement, Object parameter)
     ;
 
-    List<BoardDto> selectAll() throws Exception // List<E> selectList(String statement)
+    List<BoardDto> selectAll() // List<E> selectList(String statement)
     ;
 
-    BoardDto select(Integer bno) throws Exception // T selectOne(String statement, Object parameter)
+    BoardDto select(Integer bno)  // T selectOne(String statement, Object parameter)
     ;
 
-    List<BoardDto> selectPage(Map map) throws Exception // List<E> selectList(String statement, Object parameter)
+    List<BoardDto> selectPage(Map map)  // List<E> selectList(String statement, Object parameter)
     ;
 
-    int update(BoardDto dto) throws Exception // int update(String statement, Object parameter)
+    int update(BoardDto dto)  // int update(String statement, Object parameter)
     ;
 
-    int increaseViewCnt(Integer bno) throws Exception // int update(String statement, Object parameter)
+    int increaseViewCnt(Integer bno)// int update(String statement, Object parameter)
     ;
 
-    public int searchResultCnt(SearchCondition sc) throws Exception;
+    public int searchResultCnt(SearchCondition sc);
 
-    public List<BoardDto> searchSelectPage(SearchCondition sc) throws Exception;
+    public List<BoardDto> searchSelectPage(SearchCondition sc);
 
     int updateCommentCnt(Integer bno, int i);
 

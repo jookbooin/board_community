@@ -48,6 +48,7 @@ ul {
     height: 110px;
     line-height: 110px;
     background-color: #5080bd;
+    margin-bottom: 15px;
 }
 
 .admin_top_wrap > span {
@@ -61,13 +62,12 @@ ul {
 /* 관리자 wrap(네비+컨텐츠) */
 .admin_wrap {
 
-
 }
 
 /* 관리자페이지 네비 영역 */
 .admin_navi_wrap {
     width: 20%;
-    height: 300px;
+    /*height: 300px;*/
     float: left;
     height: 100%;
 }
@@ -90,11 +90,28 @@ ul {
     font-weight: bolder;
 }
 
+/*색변화 x */
+.admin_navi_wrap li a:link {
+    color: black;
+}
+
+.admin_navi_wrap li a:visited {
+    color: black;
+}
+
+.admin_navi_wrap li a:active {
+    color: black;
+}
+
+.admin_navi_wrap li a:hover {
+    color: black;
+}
+
 .admin_content_wrap {
     width: 80%;
     float: left;
     height: 100%;
-    height: 700px;
+    /*height: 700px;*/
 
 }
 
@@ -104,3 +121,5 @@ ul {
     font-size: 50px;
     font-weight: bolder;
 }
+
+

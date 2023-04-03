@@ -10,8 +10,7 @@ import com.ch.service.BoardService;
 import com.ch.service.FileService;
 import com.ch.service.UserService;
 import com.ch.util.FileUploadUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -27,11 +26,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/board")
 public class BoardController {
 
-    private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
+    //    private static final Logger logger = LoggerFactory.getLogger(BoardController.class);
     BoardService boardService;
     UserService userService;
     FileService fileService;
@@ -60,12 +60,12 @@ public class BoardController {
             // service
             System.out.println();
             boardService.write(boardDto);  // 여기서 파일 업로드
+            log.info("<after write board>");
+            log.info("boardDto = {}", boardDto);
 
-            System.out.println("<after write board>");
-            System.out.println("boardDto = " + boardDto);
             rattr.addFlashAttribute("msg", "WRT_OK");
-            System.out.println("board:POST(/write) --> /board/list");
-            System.out.println();
+
+            log.info("board:POST(/write) --> /board/list");
             return "redirect:/board/list";
 
         } catch (Exception e) {
@@ -83,8 +83,9 @@ public class BoardController {
         m.addAttribute("mode", "new");
 
         System.out.println();
-        System.out.println("boardlist --> board:GET(/write)");
+        log.info("boardlist --> board:GET(/write)");
         System.out.println("mode = new");
+        
         return "boardView/board";
     }
 
@@ -93,10 +94,10 @@ public class BoardController {
         setIdName(boardDto, session);
         boardDto.setFileDtolist(fileService.getBoardFiles(boardDto.getBno()));
 
-        logger.info("board:POST(/remodify) --> board");
+        log.info("board:POST(/remodify) --> board");
         m.addAttribute("mode", "modify");
         m.addAttribute(boardDto);
-        logger.info("boardDto={}", boardDto);
+        log.info("boardDto={}", boardDto);
         System.out.println("boardDto = " + boardDto);
 
         return "boardView/board";
@@ -184,7 +185,7 @@ public class BoardController {
         }
 
         // 모델에 담으면 redirect 할 때 쿼리 스트링에 ?page=i&pageSize=i 으로 붙음
-        logger.info("board:POST(/remove) -> redirect:/board/list");
+        log.info("board:POST(/remove) -> redirect:/board/list");
         return "redirect:/board/list";
     }
 
@@ -196,7 +197,7 @@ public class BoardController {
             return "redirect:/login/login?toURL=" + request.getRequestURL();  // 로그인을 안했으면 로그인 화면으로 이동
 
         System.out.println();
-        logger.info("board:GET(/list)");
+        log.info("board:GET(/list)");
 
 
         try {

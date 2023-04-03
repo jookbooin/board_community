@@ -97,12 +97,7 @@
         </div>
 
     </div>
-
-    <div class="form-group">
-        <form:input path="birth" class="input-field" type="text" name="birth" placeholder="생년월일"/>
-        <div class="msg"></div>
-    </div>
-
+    
     <div class="form-group">
         <div id="addr_num">
             <form:input path="addr_num" class="input-field" type="text" name="addr_num" placeholder="우편번호"

@@ -21,7 +21,7 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
-    public int count() throws Exception {
+    public int count() {
         return session.selectOne(namespace + "count");
     } // T selectOne(String statement)
 
@@ -31,7 +31,7 @@ public class BoardDaoImpl implements BoardDao {
     } // int delete(String statement)
 
     @Override
-    public int delete(Integer bno, String id) throws Exception {
+    public int delete(Integer bno, String id) {
         System.out.println("<BoardDaoImpl>");
         System.out.println("bno = " + bno);
         System.out.println("writerId = " + id);
@@ -44,7 +44,7 @@ public class BoardDaoImpl implements BoardDao {
     } // int delete(String statement, Object parameter)
 
     @Override
-    public int insert(BoardDto boardDto) throws Exception {
+    public int insert(BoardDto boardDto) {
         return session.insert(namespace + "insert", boardDto);
         // boardMapper에 selectKey를 이용해서 boardDto 의 bno에 Auto-increment 된 값을 바로 넣었다.
         // 원래 boardDto bno = null이고 DB에서 bno가 생성되는 것이지만
@@ -53,37 +53,37 @@ public class BoardDaoImpl implements BoardDao {
     }
 
     @Override
-    public List<BoardDto> selectAll() throws Exception {
+    public List<BoardDto> selectAll() {
         return session.selectList(namespace + "selectAll");
     } // List<E> selectList(String statement)
 
     @Override
-    public BoardDto select(Integer bno) throws Exception {
+    public BoardDto select(Integer bno) {
         return session.selectOne(namespace + "select", bno);
     } // T selectOne(String statement, Object parameter)
 
     @Override
-    public List<BoardDto> selectPage(Map map) throws Exception {
+    public List<BoardDto> selectPage(Map map) {
         return session.selectList(namespace + "selectPage", map);
     } // List<E> selectList(String statement, Object parameter)
 
     @Override
-    public int update(BoardDto dto) throws Exception {
+    public int update(BoardDto dto) {
         return session.update(namespace + "update", dto);
     } // int update(String statement, Object parameter)
 
     @Override
-    public int increaseViewCnt(Integer bno) throws Exception {
+    public int increaseViewCnt(Integer bno) {
         return session.update(namespace + "increaseViewCnt", bno);
     } // int update(String statement, Object parameter)
 
     @Override
-    public int searchResultCnt(SearchCondition sc) throws Exception {
+    public int searchResultCnt(SearchCondition sc) {
         return session.selectOne(namespace + "searchResultCnt", sc);
     }
 
     @Override
-    public List<BoardDto> searchSelectPage(SearchCondition sc) throws Exception {
+    public List<BoardDto> searchSelectPage(SearchCondition sc) {
         return session.selectList(namespace + "searchSelectPage", sc);
     }
 
