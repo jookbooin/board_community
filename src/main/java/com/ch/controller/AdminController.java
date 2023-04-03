@@ -29,8 +29,9 @@ public class AdminController {
 
     /* 상품 등록 페이지 접속 */
     @GetMapping("/productManage")
-    public void productManage() {
+    public String productManage() {
         log.info("상품 등록 페이지 접속");
+        return "/admin/productManageForm";
     }
 
     /* 상품 관리 페이지 접속 */

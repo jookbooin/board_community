@@ -3,18 +3,14 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="<c:url value='/css/include/admin/header.css'/>">
+    <link rel="stylesheet" href="<c:url value='/css/admin/productManage.css'/>">
     <link rel="stylesheet" href="<c:url value='/css/include/admin/footer.css'/>">
 </head>
 <body>
-<h1>관리자 메인 페이지</h1>
-
 <%@include file="../include/admin/header.jsp" %>
-
 <div class="admin_content_wrap">
-    <div>관리자 페이지 입니다.</div>
+    <div class="admin_content_subject"><span>상품 관리</span></div>
 </div>
-
 <%@include file="../include/admin/footer.jsp" %>
 </body>
 </html>
