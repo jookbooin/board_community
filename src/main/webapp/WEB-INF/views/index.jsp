@@ -93,7 +93,7 @@
             <h1>content area</h1>
         </div>
 
-        <jsp:include page="/WEB-INF/views/common/footer.jsp"/>
+        <jsp:include page="/WEB-INF/views/common/footer_old.jsp"/>
     </div>
 </div>
 

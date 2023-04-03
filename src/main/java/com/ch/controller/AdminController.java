@@ -51,6 +51,11 @@ public class AdminController {
     public String brandEnrollPost(BrandDto brandDto, RedirectAttributes rttr) {
         log.info("브랜드 등록 페이지 접속");
         log.info("brand={}", brandDto);
+
+        if (brandService.count(brandDto.getBrandName()) == 1) {
+            log.info("이미 존재합니다.");
+            return "redirect:/admin/brandEnroll";
+        }
         brandService.enroll(brandDto);  // 중복도 확인해야 한다.
         rttr.addFlashAttribute("enroll_result", brandDto.getBrandName());
         return "redirect:/admin/brandManage";
