@@ -4,6 +4,9 @@ import com.ch.dao.Brand.BrandDao;
 import com.ch.dto.BrandDto;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Map;
+
 @Service
 public class BrandServiceImpl implements BrandService {
     BrandDao brandDao;
@@ -18,7 +21,17 @@ public class BrandServiceImpl implements BrandService {
     }
 
     @Override
-    public int count(String brandName) {
-        return brandDao.count(brandName);
+    public int check(String brandName) {
+        return brandDao.check(brandName);
+    }
+
+    @Override
+    public int getCount() {
+        return brandDao.count();
+    }
+
+    @Override
+    public List<BrandDto> getPage(Map map) {
+        return brandDao.selectPage(map);
     }
 }

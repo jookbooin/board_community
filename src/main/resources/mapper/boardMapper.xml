@@ -55,7 +55,7 @@
                reg_date
         FROM board
     </sql>
-    
+
 
     <select id="select" parameterType="int" resultMap="BoardFileDto">
         <include refid="selectFromBoard"/>

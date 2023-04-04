@@ -7,6 +7,7 @@
         <typeAlias alias="BoardDto" type="com.ch.dto.BoardDto"/>
         <typeAlias alias="CommentDto" type="com.ch.dto.CommentDto"/>
         <typeAlias alias="UserDto" type="com.ch.dto.UserDto"/>
+        <typeAlias alias="BrandDto" type="com.ch.dto.BrandDto"/>
         <typeAlias alias="FileDto" type="com.ch.dto.FileDto"/>
         <typeAlias alias="SearchCondition" type="com.ch.domain.SearchCondition"/>
     </typeAliases>

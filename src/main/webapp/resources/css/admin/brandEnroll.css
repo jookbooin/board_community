@@ -50,7 +50,7 @@ ul {
 .admin_top_wrap {
     height: 110px;
     line-height: 110px;
-    background-color: #5080bd;
+    background-color: black;
     margin-bottom: 15px;
 }
 
@@ -121,11 +121,12 @@ ul {
     font-size: 40px;
     font-weight: bolder;
     padding-left: 15px;
-    background-color: #6AAFE6;
+    background-color: gray;
     height: 80px;
     line-height: 80px;
     color: white;
 }
+
 
 /* footer navai 영역 */
 .footer_nav {
@@ -136,7 +137,7 @@ ul {
 .footer_nav_container {
     width: 100%;
     height: 100%;
-    background-color: #8EC0E4;
+    background-color: dimgray;
 }
 
 .footer_nav_container > ul {
@@ -155,6 +156,7 @@ ul {
     width: 45px;
     height: 19px;
     padding: 10px 9px 0 10px;
+    color: white;
 }
 
 .footer_nav_container > ul > span {
@@ -165,7 +167,7 @@ ul {
 .footer {
     width: 100%;
     height: 130px;
-    background-color: #D4DFE6;
+    background-color: gray;
     padding-bottom: 50px;
 }
 
@@ -202,6 +204,7 @@ ul {
 .clearfix {
     clear: both;
 }
+
 
 .admin_list_03 {
     background-color: #c8c8c8;

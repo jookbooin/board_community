@@ -85,7 +85,7 @@ public class BoardController {
         System.out.println();
         log.info("boardlist --> board:GET(/write)");
         System.out.println("mode = new");
-        
+
         return "boardView/board";
     }
 
@@ -198,7 +198,6 @@ public class BoardController {
 
         System.out.println();
         log.info("board:GET(/list)");
-
 
         try {
             // 페이지 개수 전달

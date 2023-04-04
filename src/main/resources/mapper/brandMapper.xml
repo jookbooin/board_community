@@ -7,10 +7,24 @@
         insert into brand (brandName, brandintro)
         values (#{brandName}, #{brandIntro})
     </insert>
+    
     <select id="count" resultType="int">
         SELECT count(*)
         FROM brand
+    </select>
+
+    <select id="check" resultType="int">
+        SELECT count(*)
+        FROM brand
         where brandName = #{brandName}
+    </select>
+
+    <select id="selectPage" resultType="BrandDto">
+        select *
+        from brand
+        ORDER BY reg_date asc, brandId asc
+            LIMIT #{offset},
+                 #{pageSize}
     </select>
 
 </mapper>

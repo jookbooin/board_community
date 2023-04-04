@@ -4,9 +4,9 @@
 <html>
 <head>
     <title>Title</title>
+    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <link rel="stylesheet" href="<c:url value='/css/admin/brandEnroll.css'/>">
     <%--    <link rel="stylesheet" href="<c:url value='/css/include/admin/footer.css'/>">--%>
-    <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
     <%--    <link rel="stylesheet" href="../../../resources/css/admin/brandEnroll.css">--%>
 </head>
 <style>

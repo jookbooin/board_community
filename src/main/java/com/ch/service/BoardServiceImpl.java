@@ -29,18 +29,18 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardDto> getsearchResultPage(SearchCondition sc) throws Exception {
+    public List<BoardDto> getsearchResultPage(SearchCondition sc) {
         return boardDao.searchSelectPage(sc);
     }
 
     @Override
-    public int getSearchResultCnt(SearchCondition sc) throws Exception {
+    public int getSearchResultCnt(SearchCondition sc) {
         return boardDao.searchResultCnt(sc);
     }
 
 
     @Override
-    public int getCount() throws Exception {
+    public int getCount() {
         return boardDao.count();
     }
 
@@ -83,19 +83,19 @@ public class BoardServiceImpl implements BoardService {
     }
 
     @Override
-    public List<BoardDto> getList() throws Exception {
+    public List<BoardDto> getList() {
         return boardDao.selectAll();
     }
 
     @Override
-    public BoardDto read(Integer bno) throws Exception {
+    public BoardDto read(Integer bno) {
         BoardDto boardDto = boardDao.select(bno);
         boardDao.increaseViewCnt(bno);
         return boardDto;
     }
 
     @Override
-    public List<BoardDto> getPage(Map map) throws Exception {
+    public List<BoardDto> getPage(Map map) {
         return boardDao.selectPage(map);
     }
 

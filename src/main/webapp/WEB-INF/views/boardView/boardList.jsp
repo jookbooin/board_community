@@ -66,6 +66,7 @@
                 <th class="regdate">등록일</th>
                 <th class="viewcnt">조회수</th>
             </tr>
+
             <c:forEach var="boardDto" items="${list}">
                 <tr>
                     <td class="no">${boardDto.bno}</td>
@@ -94,18 +95,23 @@
         <%--        페이지 번호 가져오기--%>
         <div class="paging-container">
             <div class="paging">
+                
                 <c:if test="${ph.totalCnt==null || ph.totalCnt==0}">
                     <div> 게시물이 없습니다.</div>
                 </c:if>
+
                 <c:if test="${ph.totalCnt!=null && ph.totalCnt!=0}">
+
                     <c:if test="${ph.showPrev}">
                         <a class="page"
                            href="<c:url value="/board/list${ph.sc.getQueryString(ph.beginPage-1)}"/>">&lt;</a>
                     </c:if>
+
                     <c:forEach var="i" begin="${ph.beginPage}" end="${ph.endPage}">
                         <a class="page ${i==ph.sc.page? "paging-active" : ""}"
                            href="<c:url value="/board/list${ph.sc.getQueryString(i)}"/>">${i}</a>
                     </c:forEach>
+
                     <c:if test="${ph.showNext}">
                         <a class="page"
                            href="<c:url value="/board/list${ph.sc.getQueryString(ph.endPage+1)}"/>">&gt;</a>

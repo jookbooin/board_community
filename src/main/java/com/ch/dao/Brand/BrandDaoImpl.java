@@ -4,6 +4,9 @@ import com.ch.dto.BrandDto;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+import java.util.Map;
+
 @Repository
 
 public class BrandDaoImpl implements BrandDao {
@@ -20,8 +23,18 @@ public class BrandDaoImpl implements BrandDao {
     }
 
     @Override
-    public int count(String brandName) {
-        return session.selectOne(namespace + "count", brandName);
+    public int count() {
+        return session.selectOne(namespace + "count");
+    }
+
+    @Override
+    public int check(String brandName) {
+        return session.selectOne(namespace + "check", brandName);
+    }
+
+    @Override
+    public List<BrandDto> selectPage(Map map) {
+        return session.selectList(namespace + "selectPage", map);
     }
 
 

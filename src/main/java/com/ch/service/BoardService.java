@@ -8,22 +8,22 @@ import java.util.List;
 import java.util.Map;
 
 public interface BoardService {
-    List<BoardDto> getsearchResultPage(SearchCondition sc) throws Exception;
+    List<BoardDto> getsearchResultPage(SearchCondition sc);
 
-    int getSearchResultCnt(SearchCondition sc) throws Exception;
+    int getSearchResultCnt(SearchCondition sc);
 
-    int getCount() throws Exception;
+    int getCount();
 
     int remove(Integer bno, String writer) throws Exception;
 
     void write(BoardDto boardDto) throws Exception;
 
 
-    List<BoardDto> getList() throws Exception;
+    List<BoardDto> getList();
 
-    BoardDto read(Integer bno) throws Exception;
+    BoardDto read(Integer bno);
 
-    List<BoardDto> getPage(Map map) throws Exception;
+    List<BoardDto> getPage(Map map);
 
     int modify(BoardDto boardDto) throws Exception;
 }
