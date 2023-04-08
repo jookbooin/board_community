@@ -1,5 +1,6 @@
 package com.ch.service.brand;
 
+import com.ch.domain.SearchCondition;
 import com.ch.dto.BrandDto;
 
 import java.util.List;
@@ -13,4 +14,10 @@ public interface BrandService {
     int getCount();
 
     public List<BrandDto> getPage(Map map);
+
+    List<BrandDto> getsearchResultPage(SearchCondition sc);
+
+    int getSearchResultCnt(SearchCondition sc);
+
+    BrandDto brandGetDetail(int brandId);
 }

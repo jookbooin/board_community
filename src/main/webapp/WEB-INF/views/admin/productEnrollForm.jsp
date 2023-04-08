@@ -3,7 +3,7 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="<c:url value='/css/admin/productEnroll.css'/>">
+    <link rel="stylesheet" href="<c:url value='resources/css/admin/productEnroll.css'/>">
     <%--    <link rel="stylesheet" href="<c:url value='/css/include/admin/footer.css'/>">--%>
 </head>
 <body>

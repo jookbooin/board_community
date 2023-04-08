@@ -50,6 +50,7 @@ public class BoardController {
     public String write(BoardDto boardDto, BindingResult error, Model m,
                         @RequestParam("boFiles") MultipartFile[] files, HttpSession session, RedirectAttributes rattr) throws Exception {
         setIdName(boardDto, session);
+        log.info("POST: /board/write");
         try {
 
             if (files != null) {
@@ -61,7 +62,7 @@ public class BoardController {
             System.out.println();
             boardService.write(boardDto);  // 여기서 파일 업로드
             log.info("<after write board>");
-            log.info("boardDto = {}", boardDto);
+            System.out.println("boardDto = " + boardDto);
 
             rattr.addFlashAttribute("msg", "WRT_OK");
 
@@ -80,10 +81,10 @@ public class BoardController {
     @GetMapping("/write")   // 글쓰기 버튼 --> 게시판 글쓰기
     public String write(Model m) {
 
+        log.info("GET: /board/write");
         m.addAttribute("mode", "new");
 
-        System.out.println();
-        log.info("boardlist --> board:GET(/write)");
+
         System.out.println("mode = new");
 
         return "boardView/board";
@@ -94,7 +95,7 @@ public class BoardController {
         setIdName(boardDto, session);
         boardDto.setFileDtolist(fileService.getBoardFiles(boardDto.getBno()));
 
-        log.info("board:POST(/remodify) --> board");
+        log.info("POST: /board/remodify");
         m.addAttribute("mode", "modify");
         m.addAttribute(boardDto);
         log.info("boardDto={}", boardDto);
@@ -110,12 +111,11 @@ public class BoardController {
                          HttpSession session, RedirectAttributes rattr) throws Exception {
 
         if (error.hasErrors()) {
+            log.info("error 존재");
             return "forward:/board/remodify";
         }
 
-
-        System.out.println();
-        System.out.println("board:POST(/modify) --> board");
+        log.info("POST: /board/modify");
 
         try {
             setIdName(boardDto, session);
@@ -147,6 +147,11 @@ public class BoardController {
     @GetMapping("/read")
     public String read(Integer bno, Integer page, Integer pageSize, Model m) {
         try {
+            log.info("GET: /board/read");
+            System.out.println("bno = " + bno);
+            System.out.println("page = " + page);
+            System.out.println("pageSize = " + pageSize);
+
             BoardDto boardDto = boardService.read(bno);
             m.addAttribute(boardDto); // "boardDto"
             m.addAttribute("page", page);
@@ -157,16 +162,14 @@ public class BoardController {
             e.printStackTrace();
         }
 
-        System.out.println();
-        System.out.println("board:GET(/read) --> board");
         return "boardView/board";
     }
 
 
     @PostMapping("/remove")
     public String remove(Integer bno, Integer page, Integer pageSize, Model m, HttpSession session, RedirectAttributes rattr) {
-        System.out.println();
-        System.out.println("board --> POST(/remove)");
+
+        log.info("POST: /board/remove");
 
         String writer = (String) session.getAttribute("id");
 
@@ -197,7 +200,7 @@ public class BoardController {
             return "redirect:/login/login?toURL=" + request.getRequestURL();  // 로그인을 안했으면 로그인 화면으로 이동
 
         System.out.println();
-        log.info("board:GET(/list)");
+        log.info("GET: /board/list)");
 
         try {
             // 페이지 개수 전달
@@ -217,7 +220,6 @@ public class BoardController {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        System.out.println("board --> boardList");
         return "boardView/boardList"; // 로그인을 한 상태이면, 게시판 화면으로 이동
     }
 

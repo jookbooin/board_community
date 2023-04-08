@@ -10,5 +10,6 @@
         <typeAlias alias="BrandDto" type="com.ch.dto.BrandDto"/>
         <typeAlias alias="FileDto" type="com.ch.dto.FileDto"/>
         <typeAlias alias="SearchCondition" type="com.ch.domain.SearchCondition"/>
+   
     </typeAliases>
 </configuration>

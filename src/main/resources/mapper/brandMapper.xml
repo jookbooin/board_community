@@ -7,7 +7,7 @@
         insert into brand (brandName, brandintro)
         values (#{brandName}, #{brandIntro})
     </insert>
-    
+
     <select id="count" resultType="int">
         SELECT count(*)
         FROM brand
@@ -27,4 +27,25 @@
                  #{pageSize}
     </select>
 
+    <select id="searchSelectPage" parameterType="SearchCondition" resultType="BrandDto">
+        SELECT *
+        FROM brand
+        where brandName like concat('%', #{keyword}, '%')
+        ORDER BY reg_date asc, brandId asc
+            LIMIT #{offset},
+                 #{pageSize}
+    </select>
+
+    <select id="searchResultCnt" parameterType="SearchCondition" resultType="int">
+        SELECT count(*)
+        FROM brand
+        where brandName like concat('%', #{keyword}, '%')
+    </select>
+
+    <select id="brandGetDetail" resultType="BrandDto">
+        select *
+        from brand
+        where brandId = #{brandId}
+    </select>
+    
 </mapper>

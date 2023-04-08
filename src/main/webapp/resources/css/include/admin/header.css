@@ -49,7 +49,7 @@ ul {
 .admin_top_wrap {
     height: 110px;
     line-height: 110px;
-    background-color: #5080bd;
+    background-color: black;
     margin-bottom: 15px;
 }
 
@@ -61,13 +61,13 @@ ul {
     font-weight: bolder;
 }
 
-/* 관리자 wrap(네비+컨텐츠) */
+/*!* 관리자 wrap(네비+컨텐츠) *!*/
 .admin_wrap {
 
 
 }
 
-/* 관리자페이지 네비 영역 */
+/*!* 관리자페이지 네비 영역 *!*/
 .admin_navi_wrap {
     width: 20%;
     height: 300px;
@@ -109,7 +109,7 @@ ul {
 }
 
 
-관리자페이지 컨텐츠 영역
+/*관리자페이지 컨텐츠 영역*/
 .admin_content_wrap {
     width: 80%;
     float: left;
@@ -120,7 +120,7 @@ ul {
     font-size: 40px;
     font-weight: bolder;
     padding-left: 15px;
-    background-color: #6AAFE6;
+    background-color: gray;
     height: 80px;
     line-height: 80px;
     color: white;

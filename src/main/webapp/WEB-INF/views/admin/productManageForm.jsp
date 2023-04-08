@@ -3,8 +3,8 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="<c:url value='/css/admin/productManage.css'/>">
-    <link rel="stylesheet" href="<c:url value='/css/include/admin/footer.css'/>">
+    <link rel="stylesheet" href="<c:url value='/resources/css/admin/productManage.css'/>">
+    <link rel="stylesheet" href="<c:url value='/resources/css/include/admin/footer.css'/>">
 </head>
 <body>
 <%@include file="../include/admin/header.jsp" %>

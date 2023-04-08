@@ -5,11 +5,16 @@ import org.springframework.web.util.UriComponentsBuilder;
 public class SearchCondition {
     private Integer page = 1;
     private Integer pageSize = 10;
-    //    private Integer offset = 0;
     private String keyword = "";
     private String option = "";
 
     public SearchCondition() {
+    }
+
+    public SearchCondition(Integer page, Integer pageSize, String keyword) {
+        this.page = page;
+        this.pageSize = pageSize;
+        this.keyword = keyword;
     }
 
     public SearchCondition(Integer page, Integer pageSize, String keyword, String option) {
@@ -19,7 +24,7 @@ public class SearchCondition {
         this.option = option;
     }
 
-    public String getQueryString(int page) {
+    public String getQueryString(Integer page) {
         return UriComponentsBuilder.newInstance()
                 .queryParam("page", page)
                 .queryParam("pageSize", pageSize)

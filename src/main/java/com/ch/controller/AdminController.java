@@ -1,19 +1,19 @@
 package com.ch.controller;
 
-import com.ch.PageHandler_1;
+import com.ch.domain.PageHandler;
+import com.ch.domain.SearchCondition;
 import com.ch.dto.BrandDto;
 import com.ch.service.brand.BrandService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Slf4j
 @Controller
@@ -71,24 +71,24 @@ public class AdminController {
     /* 작가 관리 페이지 접속 */
 
     @GetMapping("/brandManage")
-    public String brandManage(Integer page, Integer pageSize, Model model) {
+    public String brandManage(@ModelAttribute SearchCondition sc, Model model) {
         log.info("브랜드 관리 페이지 접속");
-        if (page == null) page = 1;
-        if (pageSize == null) pageSize = 10;
 
-
-        int totalCnt = brandService.getCount();
-        PageHandler_1 ph = new PageHandler_1(totalCnt, page, pageSize);
-
-        Map map = new HashMap();
-        map.put("offset", (page - 1) * pageSize);
-        map.put("pageSize", pageSize);
-
-        List<BrandDto> list = brandService.getPage(map);
+        int totalCnt = brandService.getSearchResultCnt(sc);
+        PageHandler ph = new PageHandler(totalCnt, sc);
+        List<BrandDto> list = brandService.getsearchResultPage(sc);
         model.addAttribute("list", list);
         model.addAttribute("ph", ph);
 
         return "/admin/brandManageForm";
+    }
+
+    @GetMapping("/brandDetail")
+    public String authorGetInfoGET(Integer brandId, Integer page, Integer pageSize, Model model) {
+
+        log.info("GET: /admin/brandDetail");
+        model.addAttribute("brandId", brandId);
+        return "/admin/brandDetail";
     }
 
 }

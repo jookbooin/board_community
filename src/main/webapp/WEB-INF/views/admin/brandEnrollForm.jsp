@@ -5,66 +5,12 @@
 <head>
     <title>Title</title>
     <script src="https://code.jquery.com/jquery-1.11.3.js"></script>
-    <link rel="stylesheet" href="<c:url value='/css/admin/brandEnroll.css'/>">
-    <%--    <link rel="stylesheet" href="<c:url value='/css/include/admin/footer.css'/>">--%>
-    <%--    <link rel="stylesheet" href="../../../resources/css/admin/brandEnroll.css">--%>
+    <link rel="stylesheet" href="<c:url value='/resources/css/include/admin/header.css'/>">
+    <link rel="stylesheet" href="<c:url value='/resources/css/admin/brandEnroll.css'/>">
+    <link rel="stylesheet" href="<c:url value='/resources/css/include/admin/footer.css'/>">
 </head>
 <style>
-    .form_section {
-        width: 95%;
-        margin-left: 2%;
-        margin-top: 20px;
-        border: 1px solid #dbdde2;
-        background-color: #efefef;
-    }
 
-    .form_section_title {
-        padding: 20px 35px;
-    }
-
-    .form_section_title label {
-        display: block;
-        font-size: 20px;
-        font-weight: 800;
-    }
-
-    .form_section_content {
-        padding: 20px 35px;
-        border-top: 1px solid #dbdde2;
-    }
-
-    .form_section_content input {
-        width: 98%;
-        height: 25px;
-        font-size: 20px;
-        padding: 5px 1%;
-    }
-
-    .form_section_content span {
-        display: none;
-        padding-top: 10px;
-        text-align: center;
-        color: #e05757;
-        font-weight: 300;
-    }
-
-    .btn_section {
-        text-align: center;
-        margin: 80px 0;
-    }
-
-    .btn {
-        min-width: 180px;
-        padding: 4px 30px;
-        font-size: 25px;
-        font-weight: 600;
-        line-height: 40px;
-    }
-
-    .enroll_btn {
-        background-color: #dbdde2;
-        margin-left: 15px;
-    }
 </style>
 <body>
 <%@include file="../include/admin/header.jsp" %>
