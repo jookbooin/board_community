@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ch.dao.Product.ProductDao">
+    <insert id="productEnroll">
+        insert into product (productname, brandid, catecode, productprice, productstock, productdiscount, productintro,
+                             productcontents, reg_date, up_date)
+        values (#{productName}, #{brandId}, #{cateCode}, #{productPrice}, #{productStock}, #{productDiscount},
+                #{productIntro}, #{productContents}, now(), now());
+
+
+    </insert>
+</mapper>

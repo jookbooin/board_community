@@ -10,7 +10,7 @@ import java.util.Map;
 
 @Repository
 public class BrandDaoImpl implements BrandDao {
-    private static String namespace = "com.ch.dao.BrandDao.";
+    private static String namespace = "com.ch.dao.Brand.BrandDao.";
     private SqlSession session;
 
     public BrandDaoImpl(SqlSession session) {

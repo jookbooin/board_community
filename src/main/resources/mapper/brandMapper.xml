@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.ch.dao.BrandDao">
+<mapper namespace="com.ch.dao.Brand.BrandDao">
     <insert id="enroll">
         insert into brand (brandName, brandintro)
         values (#{brandName}, #{brandIntro})
@@ -47,5 +47,5 @@
         from brand
         where brandId = #{brandId}
     </select>
-    
+
 </mapper>

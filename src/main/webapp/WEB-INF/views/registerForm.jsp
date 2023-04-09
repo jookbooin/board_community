@@ -21,6 +21,7 @@
     <script src="<c:url value='/js/daum_address.js'/>"></script>
     <script src="<c:url value='/js/registerForm/formCheck.js'/>"></script>
 
+
     <title>Register</title>
 </head>
 <body>
@@ -97,7 +98,7 @@
         </div>
 
     </div>
-    
+
     <div class="form-group">
         <div id="addr_num">
             <form:input path="addr_num" class="input-field" type="text" name="addr_num" placeholder="우편번호"

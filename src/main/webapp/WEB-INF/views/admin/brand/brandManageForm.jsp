@@ -13,7 +13,7 @@
 
 </style>
 <body>
-<%@include file="../include/admin/header.jsp" %>
+<%@include file="../../include/admin/header.jsp" %>
 <div class="admin_content_wrap">
     <div class="admin_content_subject">
         <span>브랜드 관리</span>
@@ -28,6 +28,7 @@
                 <td class="th_column_4">수정날짜</td>
             </tr>
             </thead>
+
             <c:forEach items="${list}" var="brand">
                 <tr>
                     <td>
@@ -56,7 +57,7 @@
         <ul class="pageMaker">
 
             <c:if test="${ph.totalCnt==null || ph.totalCnt==0}">
-                <div> 게시물이 없습니다.</div>
+                <div> 등록된 브랜드가 없습니다.</div>
             </c:if>
 
             <c:if test="${ph.totalCnt!=null && ph.totalCnt!=0}">
@@ -83,7 +84,7 @@
     </div>
 </div>
 
-<%@include file="../include/admin/footer.jsp" %>
+<%@include file="../../include/admin/footer.jsp" %>
 </body>
 </html>
 
@@ -100,7 +101,6 @@
             }
 
             alert("브랜드 : '${enroll_result}' 을 등록하였습니다.");
-
         }
 
     });

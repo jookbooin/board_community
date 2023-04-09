@@ -3,7 +3,10 @@ package com.ch.controller;
 import com.ch.domain.PageHandler;
 import com.ch.domain.SearchCondition;
 import com.ch.dto.BrandDto;
+import com.ch.dto.ProductDto;
+import com.ch.service.Product.ProductService;
 import com.ch.service.brand.BrandService;
+import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,16 +19,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import java.util.List;
 
 @Slf4j
+@AllArgsConstructor
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-//    private static final Logger logger = LoggerFactory.getLogger(AdminController.class);
 
     BrandService brandService;
-
-    public AdminController(BrandService brandService) {
-        this.brandService = brandService;
-    }
+    ProductService productService;
 
     @GetMapping("/home")
     public String adminHome() {
@@ -37,21 +37,45 @@ public class AdminController {
     @GetMapping("/productManage")
     public String productManage() {
         log.info("상품 등록 페이지 접속");
-        return "/admin/productManageForm";
+        return "admin/product/productManageForm";
     }
 
     /* 상품 관리 페이지 접속 */
     @GetMapping("/productEnroll")
     public String productEnroll() {
         log.info("상품 등록 페이지 접속");
-        return "/admin/productEnrollForm";
+        return "admin/product/productEnrollForm";
+    }
+
+    @GetMapping("/brandPop")
+    public String brandPop(@ModelAttribute SearchCondition sc, Model model) throws Exception {
+
+        log.info("brandPop창 띄우기 ");
+
+        sc.setPageSize(5);
+        int totalCnt = brandService.getSearchResultCnt(sc);
+        PageHandler ph = new PageHandler(totalCnt, sc);
+        List<BrandDto> list = brandService.getsearchResultPage(sc);
+        model.addAttribute("list", list);
+        model.addAttribute("ph", ph);
+
+        return "admin/brand/brandPop";
+    }
+
+    @PostMapping("/productEnroll")
+    public String productEnroll(ProductDto productDto, RedirectAttributes rttr) {
+        log.info("상품 등록 ");
+        System.out.println("productDto = " + productDto);
+        productService.productEnroll(productDto);
+        rttr.addFlashAttribute("enroll_result", productDto.getProductName());
+        return "redirect:/admin/productManage";
     }
 
     /* 브랜드 등록 페이지 접속 */
     @GetMapping("/brandEnroll")
     public String brandEnrollgGet() {
         log.info("Get:brandEnroll");
-        return "/admin/brandEnrollForm";
+        return "admin/brand/brandEnrollForm";
     }
 
     @PostMapping("/brandEnroll")
@@ -80,7 +104,7 @@ public class AdminController {
         model.addAttribute("list", list);
         model.addAttribute("ph", ph);
 
-        return "/admin/brandManageForm";
+        return "admin/brand/brandManageForm";
     }
 
     @GetMapping("/brandDetail")
@@ -88,7 +112,8 @@ public class AdminController {
 
         log.info("GET: /admin/brandDetail");
         model.addAttribute("brandId", brandId);
-        return "/admin/brandDetail";
+        return "admin/brand/brandDetail";
     }
 
+    
 }
